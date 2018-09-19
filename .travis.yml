@@ -1,0 +1,8 @@
+services:
+  - docker
+
+script:
+  - docker build -t "jusito/docker-ttt:develop" .
+  - docker volume create TTT
+  - docker run -ti --name "TTT" -p 27015:27015/tcp -p 27015:27015/udp -v "TTT:/home/steam/server:rw" \
+  "jusito/docker-ttt:develop" -port 27015 -maxplayers 16 +map ttt_rooftops_2016_v1 -usercon +rcon_password "testing" -debug
