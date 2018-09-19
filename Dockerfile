@@ -21,8 +21,6 @@ ENV STEAM_PATH="/home/steam" \
 	\
 	USE_MY_REPLACER_CONFIG=false
 	
-VOLUME "$SERVER_PATH"
-
 ENTRYPOINT ["./home/entrypoint.sh"]
 	
 COPY ["entrypoint.sh", "installAndMountAddons.sh", "forceWorkshopDownload.sh", "experimental.sh", "/home/"]
@@ -34,6 +32,8 @@ RUN dpkg --add-architecture i386 && \
 	groupadd -g $GROUP_ID $DOCKER_USER && \
 	useradd -d /home/steam/ -g $GROUP_ID -u $USER_ID -m $DOCKER_USER && \
 	chown "$DOCKER_USER:$DOCKER_USER" /home/entrypoint.sh && \
+	mkdir -p "$SERVER_PATH" && \
+	chown -R "$DOCKER_USER:$DOCKER_USER" "$STEAM_PATH" && \
 	chmod a=rx /home/entrypoint.sh && \
 	chmod a=rx /home/installAndMountAddons.sh && \
 	chmod a=rx /home/forceWorkshopDownload.sh && \
@@ -41,3 +41,5 @@ RUN dpkg --add-architecture i386 && \
 	ulimit -n 2048
 
 USER "$USER_ID:$GROUP_ID"
+
+VOLUME "$SERVER_PATH"

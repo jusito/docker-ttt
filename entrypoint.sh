@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo "starting entrypoint.sh"
 set -e
 
@@ -7,7 +8,7 @@ if [ "$1" = "testing" ]; then
 	DEBUG_MODE=true
 fi
 
-echo "installing / updating steamcmd"
+echo "installing / updating steamcmd in $STEAM_PATH"
 cd "$STEAM_PATH"
 wget -q -O - "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar -zxvf -
 
@@ -21,6 +22,7 @@ if [ -e "${STEAM_PATH}/server/garrysmod/cache" ]; then
 fi
 
 echo "testing steamcmd"
+chmod ug=rwx,o= steamcmd.sh
 ./steamcmd.sh +login anonymous +quit
 
 echo "installing / validating ttt"
@@ -35,11 +37,16 @@ cd "$STEAM_PATH"
 		echo '[error][2] <= printed' && \
 		./steamcmd.sh +login anonymous +force_install_dir "$STEAM_PATH/server/" +app_update 4020 validate +quit)
 
-bash experimental.sh
-bash installAndMountAddons.sh
-bash forceWorkshopDownload.sh
-
 echo "processing scripts before start"
+
+echo "experimental.sh"
+bash /home/experimental.sh
+echo "forceWorkshopDownload.sh"
+bash /home/forceWorkshopDownload.sh
+echo "installAndMountAddons.sh"
+bash /home/installAndMountAddons.sh
+
+
 if [ -e "$SERVER_PATH/custom.sh" ]; then
 	echo "existing: $SERVER_PATH/custom.sh"
 	bash "$SERVER_PATH/custom.sh"
@@ -52,6 +59,7 @@ cd "$STEAM_PATH/server/"
 trap 'pkill -15 srcds_run' SIGTERM
 
 if [ "$DEBUG_MODE" != "true" ]; then
+	chmod ug=rwx,o= srcds_run
 	./srcds_run -console -game garrysmod +gamemode terrortown "$@" &
 	wait "$!"
 else

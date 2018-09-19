@@ -40,9 +40,9 @@ mount=${mount}$'}'
 if [ ! -e "${SERVER_PATH}/garrysmod/cfg" ]; then
 	mkdir -p "${SERVER_PATH}/garrysmod/cfg"
 fi
-if [ -e "${SERVER_PATH}/garrysmod/cfg" ]; then
-	rm "${SERVER_PATH}/garrysmod/cfg"
+if [ -e "${SERVER_PATH}/garrysmod/cfg/mount.cfg" ]; then
+	rm "${SERVER_PATH}/garrysmod/cfg/mount.cfg"
 fi
-touch "${SERVER_PATH}/garrysmod/cfg"
+touch "${SERVER_PATH}/garrysmod/cfg/mount.cfg"
 echo "$mount" > "${SERVER_PATH}/garrysmod/cfg/mount.cfg"
 
