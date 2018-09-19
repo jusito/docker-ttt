@@ -2,6 +2,11 @@
 echo "starting entrypoint.sh"
 set -e
 
+DEBUG_MODE=false
+if [ "$1" = "testing" ]; then
+	DEBUG_MODE=true
+fi
+
 echo "installing / updating steamcmd"
 cd "$STEAM_PATH"
 wget -q -O - "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar -zxvf -
@@ -45,5 +50,10 @@ fi
 # todo catch => send killserver / quit
 cd "$STEAM_PATH/server/"
 trap 'pkill -15 srcds_run' SIGTERM
-./srcds_run -console -game garrysmod +gamemode terrortown "$@" &
-wait "$!"
+
+if [ "$DEBUG_MODE" != "true" ]; then
+	./srcds_run -console -game garrysmod +gamemode terrortown "$@" &
+	wait "$!"
+else
+	echo "debug ended"
+fi
