@@ -25,7 +25,7 @@ VOLUME "$SERVER_PATH"
 
 ENTRYPOINT ["./home/entrypoint.sh"]
 	
-COPY ["entrypoint.sh", "installAndMountAddons.sh", "forceWorkshopDownload.sh", "/home/"]
+COPY ["entrypoint.sh", "installAndMountAddons.sh", "forceWorkshopDownload.sh", "experimental.sh", "/home/"]
 
 # removed dep. lib32gcc1 libtcmalloc-minimal4:i386 gdb
 RUN dpkg --add-architecture i386 && \
@@ -37,6 +37,7 @@ RUN dpkg --add-architecture i386 && \
 	chmod a=rx /home/entrypoint.sh && \
 	chmod a=rx /home/installAndMountAddons.sh && \
 	chmod a=rx /home/forceWorkshopDownload.sh && \
+	chmod a=rx /home/experimental.sh && \
 	ulimit -n 2048
 
 USER "$USER_ID:$GROUP_ID"
