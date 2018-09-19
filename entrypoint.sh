@@ -30,6 +30,7 @@ cd "$STEAM_PATH"
 		echo '[error][2] <= printed' && \
 		./steamcmd.sh +login anonymous +force_install_dir "$STEAM_PATH/server/" +app_update 4020 validate +quit)
 
+bash experimental.sh
 bash installAndMountAddons.sh
 bash forceWorkshopDownload.sh
 

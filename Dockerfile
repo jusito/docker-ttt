@@ -17,7 +17,9 @@ ENV STEAM_PATH="/home/steam" \
 	CSS_PATH="/home/steam/addons/css" \
 	HL2_PATH="/home/steam/addons/hl2" \
 	HLDM_PATH="/home/steam/addons/hldm" \
-	TF2_PATH="/home/steam/addons/tf2"
+	TF2_PATH="/home/steam/addons/tf2" \
+	\
+	USE_MY_REPLACER_CONFIG=false
 	
 VOLUME "$SERVER_PATH"
 
