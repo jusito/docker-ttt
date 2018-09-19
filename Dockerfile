@@ -19,8 +19,6 @@ ENV STEAM_PATH="/home/steam" \
 	HLDM_PATH="/home/steam/addons/hldm" \
 	TF2_PATH="/home/steam/addons/tf2"
 	
-USER "$USER_ID:$GROUP_ID"
-
 VOLUME "$SERVER_PATH"
 
 ENTRYPOINT ["./home/entrypoint.sh"]
@@ -38,3 +36,5 @@ RUN dpkg --add-architecture i386 && \
 	chmod a=rx /home/installAndMountAddons.sh && \
 	chmod a=rx /home/forceWorkshopDownload.sh && \
 	ulimit -n 2048
+
+USER "$USER_ID:$GROUP_ID"
