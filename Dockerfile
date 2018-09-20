@@ -38,7 +38,10 @@ RUN dpkg --add-architecture i386 && \
 	chmod a=rx /home/installAndMountAddons.sh && \
 	chmod a=rx /home/forceWorkshopDownload.sh && \
 	chmod a=rx /home/experimental.sh && \
-	ulimit -n 2048
+	ulimit -n 2048 && \
+	\
+	sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' "/etc/locale.gen" && \
+	./etc/locale.gen
 
 USER "$USER_ID:$GROUP_ID"
 
