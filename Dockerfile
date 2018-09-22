@@ -28,7 +28,8 @@ COPY ["entrypoint.sh", "installAndMountAddons.sh", "forceWorkshopDownload.sh", "
 # removed dep. lib32gcc1 libtcmalloc-minimal4:i386 gdb
 RUN dpkg --add-architecture i386 && \
 	apt-get update -y && \
-	apt-get install -y wget tar gzip ca-certificates lib32stdc++6 lib32tinfo5 && \
+	apt-get install -y wget tar gzip ca-certificates lib32stdc++6 lib32tinfo5 \
+	lib32gcc1 libtcmalloc-minimal4:i386 gdb && \
 	groupadd -g $GROUP_ID $DOCKER_USER && \
 	useradd -d /home/steam/ -g $GROUP_ID -u $USER_ID -m $DOCKER_USER && \
 	chown "$DOCKER_USER:$DOCKER_USER" /home/entrypoint.sh && \
@@ -40,8 +41,7 @@ RUN dpkg --add-architecture i386 && \
 	chmod a=rx /home/experimental.sh && \
 	ulimit -n 2048 && \
 	\
-	sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' "/etc/locale.gen" && \
-	./etc/locale.gen
+	locale-gen en_US.UTF-8
 
 USER "$USER_ID:$GROUP_ID"
 
