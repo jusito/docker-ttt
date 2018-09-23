@@ -15,7 +15,7 @@ COPY ["entrypoint.sh", "/home/"]
 # removed dep. lib32gcc1 libtcmalloc-minimal4:i386 gdb
 RUN dpkg --add-architecture i386 && \
 	apt-get update -y && \
-	apt-get install -y wget tar gzip ca-certificates lib32gcc1 lib32stdc++6 lib32ncurses5 lib32z1 locales && \
+	apt-get install -y wget tar gzip ca-certificates lib32gcc1 lib32stdc++6 lib32ncurses5 lib32z1 locales lib32tinfo5 libtcmalloc-minimal4:i386 gdb && \
 	\
 	chmod a=rx /home/entrypoint.sh && \
 	ulimit -n 2048 && \

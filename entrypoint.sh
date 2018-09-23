@@ -18,9 +18,6 @@ cd "$STEAM_PATH"
 cd "$STEAM_PATH/server/"
 trap 'pkill -15 srcds_run' SIGTERM
 
-#-console -game garrysmod +gamemode terrortown
 echo "starting with"
-echo "$@"
-echo $@
 ./srcds_run "$@" &
 wait "$!"
