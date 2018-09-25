@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 EXPOSE 27015/udp 27015/tcp
 
 ENV STEAM_PATH="/home/steam" \
-	SERVER_PATH="/home/steam/server" \
+	SERVER_PATH="/home/steam/serverfiles" \
 	GROUP_ID=10000 \
 	USER_ID=10000 \
 	DOCKER_USER=steam \
@@ -19,7 +19,8 @@ ENV STEAM_PATH="/home/steam" \
 	HLDM_PATH="/home/steam/addons/hldm" \
 	TF2_PATH="/home/steam/addons/tf2" \
 	\
-	USE_MY_REPLACER_CONFIG=false
+	USE_MY_REPLACER_CONFIG=false \
+	DEBIAN_FRONTEND=noninteractive
 	
 ENTRYPOINT ["./home/entrypoint.sh"]
 	
@@ -29,25 +30,22 @@ COPY ["entrypoint.sh", "/home/"]
 RUN dpkg --add-architecture i386 && \
 	apt-get update -y && \
 	apt-get install -y mailutils postfix curl wget file bzip2 gzip unzip bsdmainutils python util-linux ca-certificates binutils bc jq tmux lib32gcc1 libstdc++6 libstdc++6:i386 lib32tinfo5 \
-	locales && \
+	locales sudo && \
 	\
 	groupadd -g $GROUP_ID $DOCKER_USER && \
-	useradd -d /home/steam/ -g $GROUP_ID -u $USER_ID -m $DOCKER_USER && \
+	useradd -d "$STEAM_PATH" -g $GROUP_ID -u $USER_ID -m $DOCKER_USER && \
 	chown "$DOCKER_USER:$DOCKER_USER" /home/entrypoint.sh && \
-	mkdir -p "$SERVER_PATH" && \
+	sudo -u "$DOCKER_USER" mkdir -p "$SERVER_PATH" && \
 	chown -R "$DOCKER_USER:$DOCKER_USER" "$STEAM_PATH" && \
 	chmod a=rx /home/entrypoint.sh && \
-	chmod a=rx /home/installAndMountAddons.sh && \
-	chmod a=rx /home/forceWorkshopDownload.sh && \
-	chmod a=rx /home/experimental.sh && \
-	ulimit -n 2048 && \
 	\
+	ulimit -n 2048 && \
 	locale-gen en_US.UTF-8 && \
 	\
-	su -u "$DOCKER_USER" wget -O linuxgsm.sh https://linuxgsm.sh && \
-	su -u "$DOCKER_USER" chmod +x linuxgsm.sh && \
-	su -u "$DOCKER_USER" bash linuxgsm.sh gmodserver
-
+	wget -O "$STEAM_PATH/linuxgsm.sh" "https://linuxgsm.sh" && \
+	chown "$DOCKER_USER:$DOCKER_USER" "$STEAM_PATH/linuxgsm.sh" && \
+	chmod +x "$STEAM_PATH/linuxgsm.sh"
+	
 USER "$USER_ID:$GROUP_ID"
 
 VOLUME "$SERVER_PATH"
