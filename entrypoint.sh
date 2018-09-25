@@ -4,14 +4,11 @@ sleep 5s
 echo "starting entrypoint.sh"
 set -e
 
-
-
 cd "$STEAM_PATH"
-
-parms="-game garrysmod +gamemode terrortown "$(printf "%s "  "$@")
+#suggested -disableluarefresh -tickrate 66 +host_workshop_collection -port 27015
+export parms="-game garrysmod +gamemode terrortown "$(printf "%s "  "$@")
+#not needed I think: sed -i 's/parms=/#parms=/g' /home/steam/lgsm/config-lgsm/gmodserver/common.cfg
 echo "starting with $parms"
-
-ls -lA
 
 if [ -e "${STEAM_PATH}/gmodserver" ]; then
 	./gmodserver update-lgsm
@@ -21,6 +18,14 @@ else
 	./gmodserver auto-install
 fi
 
+cd "/home"
+echo "check various options"
+./experimental.sh
+echo "force workshop download"
+./forceWorkshopDownload.sh
+echo "install & mount gamefiles"
+./installAndMountAddons.sh
+cd "$STEAM_PATH"
 
 trap './home/steam/gmodserver stop' SIGTERM
 ./gmodserver start

@@ -4,6 +4,7 @@ EXPOSE 27015/udp 27015/tcp
 
 ENV STEAM_PATH="/home/steam" \
 	SERVER_PATH="/home/steam/serverfiles" \
+	STEAM_CMD="/home/steam/steamcmd" \
 	GROUP_ID=10000 \
 	USER_ID=10000 \
 	DOCKER_USER=steam \
@@ -24,7 +25,7 @@ ENV STEAM_PATH="/home/steam" \
 	
 ENTRYPOINT ["./home/entrypoint.sh"]
 	
-COPY ["entrypoint.sh", "/home/"]
+COPY ["entrypoint.sh", "experimental.sh", "forceWorkshopDownload.sh", "installAndMountAddons.sh", "/home/"]
 
 # removed dep. lib32gcc1 libtcmalloc-minimal4:i386 gdb
 RUN dpkg --add-architecture i386 && \
@@ -38,6 +39,9 @@ RUN dpkg --add-architecture i386 && \
 	sudo -u "$DOCKER_USER" mkdir -p "$SERVER_PATH" && \
 	chown -R "$DOCKER_USER:$DOCKER_USER" "$STEAM_PATH" && \
 	chmod a=rx /home/entrypoint.sh && \
+	chmod a=rx /home/experimental.sh && \
+	chmod a=rx /home/forceWorkshopDownload.sh && \
+	chmod a=rx /home/installAndMountAddons.sh && \
 	\
 	ulimit -n 2048 && \
 	locale-gen en_US.UTF-8 && \
