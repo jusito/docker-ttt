@@ -3,29 +3,11 @@
 echo "starting entrypoint.sh"
 set -e
 
-echo "installing / updating steamcmd in $STEAM_PATH"
-cd "$STEAM_PATH"
-wget -q -O - "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar -zxvf -
 
-echo "testing steamcmd"
-./steamcmd.sh -noasync +login anonymous +quit
+parms=
 
-echo "installing / validating ttt"
-cd "$STEAM_PATH"
-./steamcmd.sh -noasync +login anonymous +force_install_dir "$STEAM_PATH/server/" +app_update 4020 validate +quit
+./gmodserver install
 
-# fix steamcmd error
-ln -s "${STEAM_PATH}/linux32/steamclient.so" ~/.steam/sdk32/steamclient.so
-
-# todo catch => send killserver / quit
-cd "$STEAM_PATH/server/"
-trap 'pkill -15 srcds_run' SIGTERM
-
-echo "starting with"
-for var in "$@"
-do
-    echo "$var"
-done
-
-./srcds_run "$@" &
+trap './home/steam/gmodserver stop' SIGTERM
+./gmodserver debug
 wait "$!"
