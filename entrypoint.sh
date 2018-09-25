@@ -27,7 +27,7 @@ echo "install & mount gamefiles"
 ./installAndMountAddons.sh
 cd "$STEAM_PATH"
 
-trap './home/steam/gmodserver stop' SIGTERM
+trap 'pkill -15 srcds_linux' SIGTERM
 ./gmodserver start
 ./gmodserver console
 wait "$!"
