@@ -6,9 +6,7 @@ set -e
 
 cd "$STEAM_PATH"
 #suggested -disableluarefresh -tickrate 66 +host_workshop_collection -port 27015
-export parms="-game garrysmod +gamemode terrortown "$(printf "%s "  "$@")
-#not needed I think: sed -i 's/parms=/#parms=/g' /home/steam/lgsm/config-lgsm/gmodserver/common.cfg
-echo "starting with $parms"
+
 
 if [ -e "${STEAM_PATH}/gmodserver" ]; then
 	./gmodserver update-lgsm
@@ -26,6 +24,17 @@ echo "force workshop download"
 echo "install & mount gamefiles"
 ./installAndMountAddons.sh
 cd "$STEAM_PATH"
+
+export parms="-game garrysmod +gamemode terrortown "$(printf "%s "  "$@")
+if [ -e "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg" ]; then
+	rm -f "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg"
+fi
+mkdir -p "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/"
+touch "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg"
+echo "fn_parms(){" > "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg"
+echo "parms="'"'"$parms"'"' >> "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg"
+echo "}" >> "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg"
+echo "starting with $parms"
 
 trap 'pkill -15 srcds_linux' SIGTERM
 ./gmodserver start
