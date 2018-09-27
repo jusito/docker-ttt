@@ -7,7 +7,6 @@ set -e
 cd "$STEAM_PATH"
 #suggested -disableluarefresh -tickrate 66 +host_workshop_collection -port 27015
 
-
 if [ -e "${STEAM_PATH}/gmodserver" ]; then
 	./gmodserver update-lgsm
 	./gmodserver update
@@ -37,6 +36,7 @@ echo "}" >> "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg"
 echo "starting with $parms"
 
 trap 'pkill -15 srcds_linux' SIGTERM
+#trap "cd ${STEAM_PATH} && ./gmodserver stop" SIGTERM
 ./gmodserver start
-./gmodserver console
+./gmodserver console &
 wait "$!"
