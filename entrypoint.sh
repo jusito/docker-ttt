@@ -24,6 +24,7 @@ echo "install & mount gamefiles"
 ./installAndMountAddons.sh
 cd "$STEAM_PATH"
 
+#docker args -> lgsm args
 export parms="-game garrysmod +gamemode terrortown "$(printf "%s "  "$@")
 if [ -e "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg" ]; then
 	rm -f "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg"
@@ -35,8 +36,18 @@ echo "parms="'"'"$parms"'"' >> "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodse
 echo "}" >> "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg"
 echo "starting with $parms"
 
-trap 'pkill -15 srcds_linux' SIGTERM
-#trap "cd ${STEAM_PATH} && ./gmodserver stop" SIGTERM
+#force fetch of command_console.sh
+if [ ! -e "${STEAM_PATH}/lgsm/functions/command_console.sh" ]; then
+	wget -O "${STEAM_PATH}/lgsm/functions/command_console.sh" "https://raw.githubusercontent.com/GameServerManagers/LinuxGSM/master/lgsm/functions/command_console.sh"
+	chmod +x "${STEAM_PATH}/lgsm/functions/command_console.sh"
+fi
+#skip confirmation
+sed -i 's/! fn_prompt_yn "Continue?" Y/[ "1" != "1" ]/' "${STEAM_PATH}/lgsm/functions/command_console.sh"
+
+#start server
 ./gmodserver start
-./gmodserver console &
-wait "$!"
+
+#trap & show console
+trap 'pkill -15 srcds_run' SIGTERM
+./gmodserver console
+# If in background created and wait "$!" => terminal never started -> container exit right after
