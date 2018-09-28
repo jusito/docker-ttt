@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sleep 5s
+sleep 2s
 echo "starting entrypoint.sh"
 set -e
 
