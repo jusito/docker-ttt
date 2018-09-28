@@ -30,13 +30,9 @@ COPY ["entrypoint.sh", "experimental.sh", "forceWorkshopDownload.sh", "installAn
 # removed dep. lib32gcc1 libtcmalloc-minimal4:i386 gdb
 RUN dpkg --add-architecture i386 && \
 	apt-get update -y && \
-	apt-get install -f && \
-	apt-get clean && \
-	apt-get install -y mailutils postfix curl wget file bzip2 gzip unzip bsdmainutils python util-linux ca-certificates && \
-	apt-get install -f && \
-	apt-get clean && \
-	apt-get install -y binutils bc jq tmux lib32gcc1 libstdc++6 libstdc++6:i386 lib32tinfo5 \
-	locales sudo && \
+	apt-get install -y mailutils postfix curl wget file bzip2 gzip unzip bsdmainutils python util-linux ca-certificates \
+		binutils bc jq tmux lib32gcc1 libstdc++6 libstdc++6:i386 lib32tinfo5 \
+		locales sudo && \
 	\
 	groupadd -g $GROUP_ID $DOCKER_USER && \
 	useradd -d "$STEAM_PATH" -g $GROUP_ID -u $USER_ID -m $DOCKER_USER && \
