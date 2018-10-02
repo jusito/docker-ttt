@@ -10,6 +10,10 @@ ENV STEAM_PATH="/home/steam" \
 	DOCKER_USER=steam \
 	\
 	WORKSHOP_COLLECTION_ID= \
+	SERVER_NAME="" \
+	SERVER_PASSWORD="" \
+	SERVER_VOICE_ENABLE="1" \
+	\
 	INSTALL_CSS=false \
 	INSTALL_HL2=false \
 	INSTALL_HLDM=false \
@@ -22,7 +26,7 @@ ENV STEAM_PATH="/home/steam" \
 	\
 	USE_MY_REPLACER_CONFIG=false \
 	DEBIAN_FRONTEND=noninteractive
-	
+
 ENTRYPOINT ["./home/entrypoint.sh"]
 	
 COPY ["entrypoint.sh", "experimental.sh", "forceWorkshopDownload.sh", "installAndMountAddons.sh", "/home/"]
