@@ -46,7 +46,7 @@ sed -i 's/! fn_prompt_yn "Continue?" Y/[ "1" != "1" ]/' "${STEAM_PATH}/lgsm/func
 
 #start server
 IS_RUNNING="true"
-function stopServer {
+function stopServer() {
 	echo "stopping server..."
 	cd "${STEAM_PATH}"
 	pkill -2 srcds_linux
