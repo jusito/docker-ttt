@@ -45,9 +45,22 @@ fi
 sed -i 's/! fn_prompt_yn "Continue?" Y/[ "1" != "1" ]/' "${STEAM_PATH}/lgsm/functions/command_console.sh"
 
 #start server
+IS_RUNNING="true"
+function stopServer {
+	echo "stopping server..."
+	cd "${STEAM_PATH}"
+	pkill -2 srcds_linux
+	pkill -2 srcds_run
+	echo "server stopped!"
+	echo "stopping entrypoint..."
+	IS_RUNNING="false"
+}
 ./gmodserver start
-
-#trap & show console
-trap 'pkill -15 srcds_run' SIGTERM
-./gmodserver console
-# If in background created and wait "$!" => terminal never started -> container exit right after
+trap stopServer SIGTERM
+echo "Server is running, waiting for SIGTERM"
+while [ "$IS_RUNNING" = "true" ]
+do
+	sleep 1s
+done
+echo "entrypoint stopped"
+exit 0

@@ -13,6 +13,9 @@ docker run -d -p 27015:27015/tcp -p 27015:27015/udp -e WORKSHOP_COLLECTION_ID=12
 tcp port for rcon, if you want to use it start with -usercon +rcon_password "yourPW"
 udp port for game traffic
 
+## access console
+docker exec -it CONTAINER ./home/steam/gmodserver console
+
 ## environment variables
 If set every workshop item at the collection is added as forced, that means its automatically downloaded on connecting. Don't add collections with maps here just like weapons aso.
 WORKSHOP_COLLECTION_ID=
