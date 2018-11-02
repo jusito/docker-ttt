@@ -41,6 +41,16 @@ if [ -n "${SERVER_VOICE_ENABLE}" ]; then
 	configReplace "sv_voiceenable" "$SERVER_VOICE_ENABLE"
 fi
 
+#set up cronjob
+crontab -r | true
+rm -f "$STEAM_PATH/lgsm-cronjobs" | true
+touch "$STEAM_PATH/lgsm-cronjobs"
+echo "*/5 * * * * su - '$DOCKER_USER' -c '$STEAM_PATH/gmodserver monitor' > /dev/null 2>&1" >> "$STEAM_PATH/lgsm-cronjobs"
+echo "*/30 * * * * su - '$DOCKER_USER' -c '$STEAM_PATH/gmodserver update' > /dev/null 2>&1" >> "$STEAM_PATH/lgsm-cronjobs"
+echo "0 10 * * 0  su - '$DOCKER_USER' -c '$STEAM_PATH/gmodserver force-update' > /dev/null 2>&1" >> "$STEAM_PATH/lgsm-cronjobs"
+echo "" >> "$STEAM_PATH/lgsm-cronjobs"
+crontab "$STEAM_PATH/lgsm-cronjobs"
+
 #this is a simple option for myself, but you can use it too
 if [ "$USE_MY_REPLACER_CONFIG" = "true" ] && [ ! -e "${SERVER_PATH}/garrysmod/data/jusito_ttt_entity_replace" ]; then
 	mkdir -p "${SERVER_PATH}/garrysmod/data/jusito_ttt_entity_replace"

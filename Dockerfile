@@ -36,7 +36,7 @@ RUN dpkg --add-architecture i386 && \
 	apt-get update -y && \
 	apt-get install -y mailutils postfix curl wget file bzip2 gzip unzip bsdmainutils python util-linux ca-certificates \
 		binutils bc jq tmux lib32gcc1 libstdc++6 libstdc++6:i386 lib32tinfo5 \
-		locales sudo && \
+		locales sudo cron && \
 	\
 	groupadd -g $GROUP_ID $DOCKER_USER && \
 	useradd -d "$STEAM_PATH" -g $GROUP_ID -u $USER_ID -m $DOCKER_USER && \
