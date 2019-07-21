@@ -1,6 +1,12 @@
 #!/bin/bash
 
-set -e
+if [ "${DEBUGGING}" = "true" ]; then
+	set -o xtrace
+fi
+
+set -o errexit
+set -o nounset
+set -o pipefail
 
 #using WORKSHOP_COLLECTION_ID
 LUA_PATH="${SERVER_PATH}/garrysmod/lua/autorun/server"

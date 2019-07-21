@@ -25,7 +25,9 @@ echo "install & mount gamefiles"
 cd "$STEAM_PATH"
 
 #docker args -> lgsm args
-export parms="-game garrysmod +gamemode terrortown "$(printf "%s "  "$@")
+temp=""
+temp=$(printf "%s "  "$@") || true
+export parms="-game garrysmod +gamemode terrortown $temp"
 if [ -e "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg" ]; then
 	rm -f "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg"
 fi
@@ -49,8 +51,8 @@ IS_RUNNING="true"
 function stopServer() {
 	echo "stopping server..."
 	cd "${STEAM_PATH}"
-	pkill -2 srcds_linux
-	pkill -2 srcds_run
+	kill -2 "$(pidof srcds_linux)" || true
+	kill -2 "$(pidof srcds_run)" || true
 	echo "server stopped!"
 	echo "stopping entrypoint..."
 	IS_RUNNING="false"

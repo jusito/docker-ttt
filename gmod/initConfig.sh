@@ -1,13 +1,18 @@
 #!/bin/bash
 
-set -e
+if [ "${DEBUGGING}" = "true" ]; then
+	set -o xtrace
+fi
+
+set -o errexit
+set -o nounset
+set -o pipefail
 
 function configReplace() {
 	source="$1"
 	target="$source \"$2\""
-	#grep -c would be nicer
-	# shellcheck disable=SC2126
-	count=$(grep -Po "($source).+" "${SERVER_PATH}/garrysmod/cfg/server.cfg" | wc -l)
+	
+	count=$(grep -Poc "($source).+" "${SERVER_PATH}/garrysmod/cfg/server.cfg")
 	
 	echo "Request for replacing $source to $target, source is found $count times"
 	
@@ -15,9 +20,11 @@ function configReplace() {
 		source=$(grep -Po "($source).+" "${SERVER_PATH}/garrysmod/cfg/server.cfg" | sed 's/\\/\\\\/g' | sed 's/\//\\\//g')
 		target=$(echo "$target" | sed 's/\\/\\\\/g' | sed 's/\//\\\//g')
 		sed -i "s/$source/$target/g" "${SERVER_PATH}/garrysmod/cfg/server.cfg"
+		
 	elif [ "$count" == "0" ]; then
 		echo "" >> "${SERVER_PATH}/garrysmod/cfg/server.cfg"
 		echo "$target" >> "${SERVER_PATH}/garrysmod/cfg/server.cfg"
+		
 	else
 		echo "can't set $1 because there are multiple in"
 	fi
@@ -25,11 +32,9 @@ function configReplace() {
 
 #create default server.config
 # not empty: grep -q '[^[:space:]]' < 'server.cfg' && echo "not empty"
-#grep -c would be nicer
-# shellcheck disable=SC2126
-if [ ! -e "${SERVER_PATH}/garrysmod/cfg/server.cfg" ] || [ "0" = "$(grep -o '[^[:space:]]' "${SERVER_PATH}/garrysmod/cfg/server.cfg" | wc -l)" ]; then
-	mkdir -p "${SERVER_PATH}/garrysmod/cfg"
-	wget -O "${SERVER_PATH}/garrysmod/cfg/server.cfg" "https://raw.githubusercontent.com/jusito/docker-ttt/master/server.cfg"
+if [ ! -e "${SERVER_PATH}/garrysmod/cfg/server.cfg" ] || [ "0" = "$(grep -oc '[^[:space:]]' "${SERVER_PATH}/garrysmod/cfg/server.cfg")" ]; then
+	mkdir -p "${SERVER_PATH}/garrysmod/cfg" || true
+	cp -f "/home/server.cfg.default" "${SERVER_PATH}/garrysmod/cfg/server.cfg"
 	chown "$USER_ID:$GROUP_ID" "${SERVER_PATH}/garrysmod/cfg/server.cfg"
 	chmod u+rw "${SERVER_PATH}/garrysmod/cfg/server.cfg"
 fi

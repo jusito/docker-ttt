@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM debian:stretch
 
 EXPOSE 27015/udp 27015/tcp
 
@@ -32,6 +32,7 @@ ENTRYPOINT ["./home/entrypoint.sh"]
 COPY ["entrypoint.sh", "experimental.sh", "forceWorkshopDownload.sh", "installAndMountAddons.sh", "/home/"]
 
 # removed dep. lib32gcc1 libtcmalloc-minimal4:i386 gdb
+#sudo dpkg --add-architecture i386; 
 RUN dpkg --add-architecture i386 && \
 	apt-get update -y && \
 	apt-get install -y mailutils postfix curl wget file bzip2 gzip unzip bsdmainutils python util-linux ca-certificates \
@@ -49,7 +50,8 @@ RUN dpkg --add-architecture i386 && \
 	chmod a=rx /home/installAndMountAddons.sh && \
 	\
 	ulimit -n 2048 && \
-	locale-gen en_US.UTF-8 && \
+	sed -i 's/# en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen && \
+	locale-gen && \
 	\
 	wget -O "$STEAM_PATH/linuxgsm.sh" "https://linuxgsm.sh" && \
 	chown "$DOCKER_USER:$DOCKER_USER" "$STEAM_PATH/linuxgsm.sh" && \

@@ -1,4 +1,4 @@
-# docker-ttt
+# GMOD TTT
 GMOD TTT server image, https://hub.docker.com/r/jusito/
 
 ## TODO
@@ -38,3 +38,8 @@ https://wiki.garrysmod.de/server.cfg
 Path in container is:
 docker cp "your server.cfg path" CONTAINER:/home/steam/serverfiles/garrysmod/cfg/server.cfg
 
+
+## Additional
+
+### Debian Buster
+Currently one dependency is missing: https://packages.debian.org/search?keywords=lib32tinfo5

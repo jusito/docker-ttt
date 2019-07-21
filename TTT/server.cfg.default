@@ -1,0 +1,101 @@
+hostname ""
+sv_password ""
+sv_voiceenable 0
+
+sv_contact "unknown"
+
+
+// rcon passsword
+sv_rcon_banpenalty 5
+sv_rcon_maxfailures 3
+
+//DNA
+ttt_killer_dna_range 300
+ttt_killer_dna_basetime 100
+
+
+//Prep
+ttt_firstpreptime 60
+ttt_preptime_seconds 30
+ttt_posttime_seconds 3
+
+
+//Round length
+ttt_haste 0
+// ttt_haste_starting_minutes 5
+// ttt_haste_minutes_per_death 0.5
+
+ttt_roundtime_minutes 10
+
+
+
+//Map Switching
+ttt_round_limit 10
+ttt_time_limit_minutes 75
+
+//ttt_always_use_mapcycle 0
+
+
+//Player Counts
+ttt_minimum_players 2
+ttt_traitor_pct 0.4
+ttt_traitor_max 32
+ttt_detective_pct 0.1
+ttt_detective_max 32
+ttt_detective_min_players 6
+ttt_detective_karma_min 600 
+
+
+//Karma
+ttt_karma 1
+ttt_karma_strict 1
+ttt_karma_starting 1000
+ttt_karma_max 1000
+ttt_karma_ratio 0.001
+ttt_karma_kill_penalty 50
+ttt_karma_round_increment 5
+ttt_karma_clean_bonus 30
+ttt_karma_traitordmg_ratio 0.0003
+ttt_karma_traitorkill_bonus 100
+ttt_karma_low_autokick 1
+ttt_karma_low_amount 300
+ttt_karma_low_ban 0
+ttt_karma_low_ban_minutes 60
+ttt_karma_persist 1
+ttt_karma_clean_half 0.25
+
+//Other
+ttt_postround_dm 0
+ttt_no_nade_throw_during_prep 0
+ttt_weapon_carrying 1
+ttt_weapon_carrying_range 50
+ttt_teleport_telefrags 1
+ttt_ragdoll_pinning 1
+ttt_ragdoll_pinning_innocents 1
+ttt_use_weapon_spawn_scripts 1
+ttt_spawn_wave_interval 2
+ttt_allow_discomb_jump 1
+ttt_debug_preventwin 0
+
+// server logging
+log on
+sv_logbans 1
+sv_logecho 1
+sv_logfile 0
+sv_log_onefile 0
+
+// operation
+sv_lan 0
+sv_region 3 //Europa
+
+// traitor
+ttt_credits_detectivekill 2
+ttt_credits_award_repeat 0.5
+
+// fastdl
+sv_allowdownload 1
+sv_allowupload 0
+// sv_downloadurl "your url"
+
+exec banned_user.cfg
+exec banned_ip.cfg 
