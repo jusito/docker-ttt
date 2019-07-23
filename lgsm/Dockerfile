@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:stretch-slim
 
 # Const \\ Overwrite Env \\ Configs possible \\ Configs needed 
 ENV STEAM_PATH="/home/steam" \
@@ -13,6 +13,8 @@ ENV STEAM_PATH="/home/steam" \
 	\
 	\
 	DEBIAN_FRONTEND=noninteractive \
+	LANG=C.UTF-8 \
+	TERM=xterm \
 	\
 	\
 	DEBUGGING=false \
@@ -36,7 +38,7 @@ RUN dpkg --add-architecture i386 && \
 	apt-get update -y && \
 	apt-get install -y mailutils postfix curl wget file bzip2 gzip unzip bsdmainutils python util-linux ca-certificates \
 		binutils bc jq tmux lib32gcc1 libstdc++6 libstdc++6:i386 lib32tinfo5 \
-		locales procps && \
+		procps iproute2 && \
 	\
 	groupadd -g $GROUP_ID $DOCKER_USER && \
 	useradd -d "$STEAM_PATH" -g $GROUP_ID -u $USER_ID -m $DOCKER_USER && \
@@ -48,8 +50,6 @@ RUN dpkg --add-architecture i386 && \
 	chmod a=rx /home/initCron.sh && \
 	\
 	ulimit -n 2048 && \
-	sed -i 's/# en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen && \
-	locale-gen && \
 	\
 	wget -O "$STEAM_PATH/linuxgsm.sh" "https://linuxgsm.sh" && \
 	chown "$DOCKER_USER:$DOCKER_USER" "$STEAM_PATH/linuxgsm.sh" && \
