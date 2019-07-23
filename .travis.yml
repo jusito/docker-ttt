@@ -1,8 +1,0 @@
-services:
-  - docker
-
-script:
-  - docker build -t "jusito/docker-ttt:develop" .
-  - docker volume create TTT
-  - docker run -d -P -e INSTALL_CSS=true -e WORKSHOP_COLLECTION_ID=899062542 --name "TTT" -p 27015:27015/tcp -p 27015:27015/udp -v "TTT:/home/steam/server:rw" \
-  "jusito/docker-ttt:develop" "testing"
