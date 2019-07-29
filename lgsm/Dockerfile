@@ -30,10 +30,13 @@ ENV STEAM_PATH="/home/steam" \
 #https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 ENTRYPOINT ["./home/entrypoint.sh"]
+
+#WORKDIR "$STEAM_PATH"
 	
 COPY ["entrypoint.sh", "initCron.sh", "/home/"]
 
 # procps needed for ps command
+# iproute2 needed because of "-slim"
 RUN dpkg --add-architecture i386 && \
 	apt-get update -y && \
 	apt-get install -y mailutils postfix curl wget file bzip2 gzip unzip bsdmainutils python util-linux ca-certificates \
