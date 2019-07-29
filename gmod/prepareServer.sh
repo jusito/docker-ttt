@@ -9,6 +9,9 @@ set -o nounset
 #./prepareServer.sh: 9: set: Illegal option -o pipefail
 #set -o pipefail
 
+mkdir -p "/home/steam/lgsm/config-lgsm/gmodserver/"
+cp -f "/home/common.cfg" "/home/steam/lgsm/config-lgsm/gmodserver/common.cfg"
+
 cd "/home"
 echo "check configurations"
 ./initConfig.sh
