@@ -1,53 +1,101 @@
-# docker-ttt
-Garry's mod, gamemode TTT as docker image: https://hub.docker.com/r/jusito/
+# GMOD TTT
+GMOD TTT server image, https://hub.docker.com/r/jusito/
+
+## TODO
+* sv_password not working
+* rcon not working
+* scrds doesn't like different internal / external ports (thats why no ports are exposed)
+* replacer config in other repo u2d?
+* health check -> details
+* volume for steam workshop
+* volume for other games
+* volume for gmod config
+* AppArmor Profile
 
 ## Getting Started
-1. Create 2 workshop collections. One containing Maps and a subcollection. Subcollection containing all non-map elements.
-2. Do you want forced auto download? If no go 3., if yes use `-e WORKSHOP_COLLECTION_ID=*SubCollectionID*`.
-3. Let Gmod server know which collection should be used. `[...]jusito/docker-ttt:beta +host_workshop_collection *MainCollectionID* [...]`
-4. Do you want CSS or other game content installed and mounted(CSS recommended)? If no go 5., if yes `-e INSTALL_CSS=true` or see environment variables.
-5. Choose your ports. Default is 27015. `docker run [...] -p 27015:27015/tcp jusito/docker-ttt:beta -port 27015 [...]`
+1. Create public workshop collection without maps, dummy ID:=123456. Use `jusito/docker-ttt [...] +host_workshop_collection 123456`. Create a collection with maps ID:=7891011 and add/link it to 123456. If you want the clients to automatically load the collection from the workshop when connecting without subscribing, use `-e WORKSHOP_COLLECTION_ID=123456`. The users loading all non-maps at startup and the map if needed, but you don't need to point them to the collection in the workshop.
+2. Do this elements need CSS, HL2, HLDM, TF2? Use `-e INSTALL_CSS=true` or `-e INSTALL_HL2=true` aso.
+3. Which ports? 27015/udp is default for game traffic x/tcp for rcon, for 27016 you would use `-p 27016:27016/udp [...] jusito/docker-ttt [...] -port 27016`.
+4. Set environment variables like servername `-e SERVER_NAME="My Server"`, password `-e SERVER_PASSWORD="securepw"` and timezone for cron `-e TZ="Europe/Berlin"`, default short downtime at Sunday 10 o'clock.
+5. Add options for server like startmap `+map ttt_rooftops_2016_v1` and max players `-maxplayers 10`
 
-### run example
+### run example without rcon
 ```
-docker run -dit -p 27015:27015/tcp -p 27015:27015/udp -e WORKSHOP_COLLECTION_ID=123456 -e INSTALL_CSS=true "jusito/docker-ttt:beta" -port 27015 +host_workshop_collection 123456 +map ttt_rooftops_2016_v1 -maxplayers 16 
+docker run -d \
+ -e INSTALL_CSS=true \
+ -p 27015:27015/udp \
+ -e SERVER_NAME="My Server" \
+ -e SERVER_PASSWORD="securepw" \
+ -e TZ="Europe/Berlin" \
+ jusito/docker-ttt:gmod_ttt_debian \
+ -port 27015 \
+ +map ttt_rooftops_2016_v1 \
+ -maxplayers 10
 ```
- * _-it_ needed for seeing all output if attached
- * _27015/tcp_(optional) - rcon port, you will need this too: -usercon +rcon_password "yourPW"
- * _27015/udp_ - udp port for game traffic
- * _-port 27015_ - only needed if you want to use non-default port, docker -p 27016:27015 will _not_ work.
- * _-e WORKSHOP_COLLECTION_ID_(optional) - add every element to forced
- * _-e INSTALL_CSS_(optional) - download CSS and mount it
- * _+host_workshop_collection_ - Garry's Mod will load this collection
- * _+map_(optional) - default map to start
- * _-maxplayers_(optional) - max count of players
- 
-### whats missing, why tag beta:
-1. cron service needs to be started otherwise the server will get only updates on restart
-2. force cleanup of downloaded elements => removed workshop elements are otherwise used
-3. I failed to create a proper volume, mount /home/steam/serverfiles.
+
+### run example with rcon
+```
+docker run -d \
+ -e WORKSHOP_COLLECTION_ID=123456 \
+ -e INSTALL_CSS=true \
+ -p 27015:27015/udp -p 27015:27015/tcp \
+ -e SERVER_NAME="My Server" \
+ -e SERVER_PASSWORD="securepw" \
+ -e TZ="Europe/Berlin" \
+ jusito/docker-ttt:gmod_ttt_debian \
+ -port 27015 \
+ +map ttt_rooftops_2016_v1 \
+ -maxplayers 10 \
+ -usercon +rcon_password "yourPW"
+```
+
+## Tags
+* lgsm\_debian - Linux Game Server Manager in Debian
+* gmod\_debian - Garrys Mod with Debian and LGSM
+* gmod\_ttt\_debian
+
+## Environment Variables
+
+### Server Properties
+### additional config
+### Internal Used (don't change please)
+
+## GMOD Parameters
+
+## LGSM Usage
+docker exec -it CONTAINER ./home/steam/gmodserver console
+
+## File Locations
+### Volumes
+
+### Other
+
 
 ## environment variables
-| Variable | Default | Description | Example |
-|----------|---------|-------------|---------|
-|WORKSHOP_COLLECTION_ID|""(empty)|Every element on this list is set to forced download. The users don't need to subscribe to your collection. Don't add maps here, they are already forced by default.|1358835428|
-|||||
-|SERVER_NAME|""(empty)|overwrite server.cfg value|"[TTT] dockerized"|
-|SERVER_PASSWORD|""(empty)|overwrite server.cfg value|"SecurePW"|
-|SERVER_VOICE_ENABLE|1|overwrite server.cfg value|0 (disabling ingame voice)|
-|||||
-|INSTALL_CSS|false|Install & Mount CSS. Most of the time you will set this to true.|true|
-|INSTALL_HL2|false|Install & Mount HL2.|true|
-|INSTALL_HLDM|false|Install & Mount HLDM.|true|
-|INSTALL_TF2|false|Install & Mount TF2.|true|
+If set every workshop item at the collection is added as forced, that means its automatically downloaded on connecting. Don't add collections with maps here just like weapons aso.
+WORKSHOP_COLLECTION_ID=
+
+This variables are used to write the value to the server.cfg:
+SERVER_NAME=""
+SERVER_PASSWORD=""
+SERVER_VOICE_ENABLE="1"
+
+If set to "true" the game is installed and mounted, most of the time you want to add the css content.
+INSTALL_CSS=false
+INSTALL_HL2=false
+INSTALL_HLDM=false
+INSTALL_TF2=false
 
 ## server config
-* [TTT config variables](http://ttt.badking.net/config-and-commands/convars)
-* [Server.cfg variables](https://wiki.garrysmod.de/server.cfg)
+http://ttt.badking.net/config-and-commands/convars
+https://wiki.garrysmod.de/server.cfg
+
+Path in container is:
+docker cp "your server.cfg path" CONTAINER:/home/steam/serverfiles/garrysmod/cfg/server.cfg
 
 
 ## Additional
- * Attach to console after start, `docker exec -it _CONTAINER_ /home/steam/gmodserver console`
- * Copy your server.cfg in, `docker cp "your server.cfg path" CONTAINER:/home/steam/serverfiles/garrysmod/cfg/server.cfg`
-
-
+- Debian Buster, one dependency is missing: https://packages.debian.org/search?keywords=lib32tinfo5
+- Alpine, steamcmd doesn't like musl
+### Debian Buster
+Currently one dependency is missing: https://packages.debian.org/search?keywords=lib32tinfo5
