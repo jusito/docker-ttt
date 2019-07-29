@@ -25,9 +25,11 @@ docker build -t "jusito/docker-ttt:gmod_ttt_debian" "./TTT/"
 
 
 echo "[testRun][INFO]running"
-if ! docker run -ti --name "JusitoTesting" --rm -e TEST_MODE=true -e DEBUGGING="$DEBUGGING" "jusito/docker-ttt:gmod_ttt_debian"; then
+if ! docker run -ti --name "JusitoTesting" --rm -e TEST_MODE=true -e DEBUGGING="$DEBUGGING" -e SERVER_PASSWORD="testpw" -e SERVER_MAX_PLAYERS="10" "jusito/docker-ttt:gmod_ttt_debian"; then
 	echo "[testRun][ERROR]run test failed for docker-ttt:ubuntu"
 	exit 1
 fi
 docker stop "JusitoTesting" || true
 docker rm "JusitoTesting" || true
+
+#docker run -ti --name "JusitoTesting" -p 27015:27015/udp -p 27015:27015/tcp --rm -e TEST_MODE=true -e DEBUGGING="$DEBUGGING" -e SERVER_PASSWORD="testpw" -e SERVER_MAX_PLAYERS="10" "jusito/docker-ttt:gmod_ttt_debian"
