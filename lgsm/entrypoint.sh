@@ -5,6 +5,7 @@ if [ "${DEBUGGING}" = "true" ]; then
 fi
 
 set -o errexit
+set -o nounset
 set -o pipefail
 
 echo "starting entrypoint.sh"
@@ -27,23 +28,10 @@ fi
 
 if [ -e "/home/prepareServer.sh" ]; then
 	cd /home
-	./prepareServer.sh
+	./prepareServer.sh "$@"
 	cd "$STEAM_PATH"
 fi
 
-
-
-
-
-
-# --- Apply LGSM Workarounds ---
-#force fetch of command_console.sh
-if [ ! -e "${STEAM_PATH}/lgsm/functions/command_console.sh" ]; then
-	wget -O "${STEAM_PATH}/lgsm/functions/command_console.sh" "https://raw.githubusercontent.com/GameServerManagers/LinuxGSM/master/lgsm/functions/command_console.sh"
-	chmod +x "${STEAM_PATH}/lgsm/functions/command_console.sh"
-fi
-#skip confirmation
-sed -i 's/! fn_prompt_yn "Continue?" Y/[ "1" != "1" ]/' "${STEAM_PATH}/lgsm/functions/command_console.sh"
 
 
 
@@ -60,8 +48,9 @@ function stopServer() {
 	echo "server stopped!"
 	echo "stopping entrypoint..."
 	IS_RUNNING="false"
+	echo "done!"
 }
-./"$SERVER_EXECUTABLE" start
+./"$SERVER_EXECUTABLE" start &
 trap stopServer SIGTERM
 
 #start cron
