@@ -1,6 +1,6 @@
 FROM jusito/docker-ttt:gmod_debian
 	
-ENV SERVER_GAMEMODE="+gamemode terrortown"
+ENV SERVER_GAMEMODE="terrortown"
 
 COPY "server.cfg.default" "/home/server.cfg.default"
 
