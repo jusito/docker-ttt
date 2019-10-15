@@ -83,7 +83,6 @@ RUN chown "$DOCKER_USER:$DOCKER_USER" /home/prepareServer.sh && \
 	chmod a=rx /home/forceWorkshopDownload.sh && \
 	chmod a=rx /home/installAndMountAddons.sh && \
 	\
-	/home/createAlias.sh "details" '/home/steam/gmodserver details' && \
 	/home/createAlias.sh "backup" '/home/steam/gmodserver backup' && \
 	/home/createAlias.sh "console" '/home/steam/gmodserver console' && \
 	/home/createAlias.sh "debug" '/home/steam/gmodserver debug' && \
