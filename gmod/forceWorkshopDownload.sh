@@ -20,8 +20,9 @@ else
 fi
 
 if [ "$WORKSHOP_COLLECTION_ID" = "0" ] || [ "$WORKSHOP_COLLECTION_ID" = "" ] || [ "$WORKSHOP_AUTOLOAD" != "true" ]; then
-	echo "No auto workshop download"
+	echo "[forceWorkshopDownload.sh]No auto workshop download"
 else
+	echo "[forceWorkshopDownload.sh]processing workshop collection ${WORKSHOP_COLLECTION_ID}"
 	touch "$LUA_FILE"
 	arr=$(wget -q -O - https://steamcommunity.com/sharedfiles/filedetails/?id="${WORKSHOP_COLLECTION_ID}" | tr '\n' ' ' | grep -Po '"workshopItem"[^"]+"https://steamcommunity.com/sharedfiles/filedetails/\?id=(\d+)' | grep -Po '\d\d\d+' )
 	str=""

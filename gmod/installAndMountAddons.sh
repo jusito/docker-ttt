@@ -10,7 +10,7 @@ set -o pipefail
 cd "$STEAM_CMD"
 mount='"mountcfg"'$'\n{\n'
 if [ "$INSTALL_CSS" = "true" ]; then
-	echo "installing & mounting css"
+	echo "[installAndMountAddons.sh]installing & mounting css"
 	./steamcmd.sh +login anonymous +force_install_dir "$CSS_PATH" +app_update 232330 validate +quit
 	mount=${mount}'        "cstrike"    "'"${CSS_PATH}/cstrike"$'"\n'
 	if [ "$INSTALL_HL2" != "true" ]; then
@@ -18,13 +18,13 @@ if [ "$INSTALL_CSS" = "true" ]; then
 	fi
 fi
 if [ "$INSTALL_HL2" = "true" ]; then
-	echo "installing & mounting hl2"
+	echo "[installAndMountAddons.sh]installing & mounting hl2"
 	./steamcmd.sh +login anonymous +force_install_dir "$HL2_PATH" +app_update 232370 validate +quit
 	mount=${mount}'        "hl2"    "'"${HL2_PATH}/hl2"$'"\n'
 	mount=${mount}'        "hl2mp"    "'"${HL2_PATH}/hl2mp"$'"\n'
 fi
 if [ "$INSTALL_TF2" = "true" ]; then
-	echo "installing & mounting tf2"
+	echo "[installAndMountAddons.sh]installing & mounting tf2"
 	./steamcmd.sh +login anonymous +force_install_dir "$TF2_PATH" +app_update 232250 validate +quit
 	mount=${mount}'        "tf2"    "'"${TF2_PATH}/tf"$'"\n'
 	if [ "$INSTALL_CSS" != "true" ] && [ "$INSTALL_HL2" != "true" ]; then
@@ -32,7 +32,7 @@ if [ "$INSTALL_TF2" = "true" ]; then
 	fi
 fi
 if [ "$INSTALL_HLDM" = "true" ]; then
-	echo "installing & mounting hldm"
+	echo "[installAndMountAddons.sh]installing & mounting hldm"
 	./steamcmd.sh +login anonymous +force_install_dir "$HLDM_PATH" +app_update 255470 validate +quit
 	mount=${mount}'        "hl1"    "'"${HLDM_PATH}/hl1"$'"\n'
 	mount=${mount}'        "hldm"    "'"${HLDM_PATH}/hldm"$'"\n'

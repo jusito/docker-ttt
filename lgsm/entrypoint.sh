@@ -8,7 +8,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-echo "starting entrypoint.sh"
+echo "[entrypoint.sh]starting entrypoint.sh"
 set -e
 
 
@@ -19,12 +19,15 @@ set -e
 # --- Install / Update ---
 cd "$STEAM_PATH"
 if [ -n "$SERVER_EXECUTABLE" ] && [ -e "${STEAM_PATH}/$SERVER_EXECUTABLE" ]; then
+	echo "[entrypoint.sh]updating..."
 	./"$SERVER_EXECUTABLE" update-lgsm
 	./"$SERVER_EXECUTABLE" update
 else
+	echo "[entrypoint.sh]installing..."
 	bash linuxgsm.sh "$SERVER_GAME"
 	./"$SERVER_EXECUTABLE" auto-install
 fi
+echo "[entrypoint.sh]update / installation done!"
 
 if [ -e "/home/prepareServer.sh" ]; then
 	cd /home
