@@ -9,10 +9,9 @@ set -o nounset
 #./prepareServer.sh: 9: set: Illegal option -o pipefail
 #set -o pipefail
 
-LGSM_SERVER_CONFIG="/home/steam/lgsm/config-lgsm/gmodserver/common.cfg"
-
+# copy lgsm config
 mkdir -p "/home/steam/lgsm/config-lgsm/gmodserver/"
-cp -f "/home/common.cfg" "$LGSM_SERVER_CONFIG" # common.cfg should be target, but is wrong, maybe a bug. (gmodserver working)
+cp -f "/home/common.cfg" "/home/steam/lgsm/config-lgsm/gmodserver/common.cfg" # common.cfg should be target, but is wrong, maybe a bug. (gmodserver working)
 
 cd "/home"
 echo "[prepareServer.sh]check configurations"
