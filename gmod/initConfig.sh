@@ -8,38 +8,40 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+CFG_PATH="${SERVER_PATH}/garrysmod/cfg/gmodserver.cfg"
+
 function configReplace() {
 	source="$1"
 	target="$source \"$2\""
 	
-	count=$(grep -Poc "($source).+" "${SERVER_PATH}/garrysmod/cfg/server.cfg")
+	count=$(grep -Poc "($source).+" "${CFG_PATH}")
 	
-	echo "Request for replacing $source to $target, source is found $count times"
+	echo "[initConfig.sh]Request for replacing $source to $target, source is found $count times"
 	
 	if [ "$count" == "1" ]; then
-		source=$(grep -Po "($source).+" "${SERVER_PATH}/garrysmod/cfg/server.cfg" | sed 's/\\/\\\\/g' | sed 's/\//\\\//g')
+		source=$(grep -Po "($source).+" "${CFG_PATH}" | sed 's/\\/\\\\/g' | sed 's/\//\\\//g')
 		target=$(echo "$target" | sed 's/\\/\\\\/g' | sed 's/\//\\\//g')
-		sed -i "s/$source/$target/g" "${SERVER_PATH}/garrysmod/cfg/server.cfg"
+		sed -i "s/$source/$target/g" "${CFG_PATH}"
 		
 	elif [ "$count" == "0" ]; then
-		echo "" >> "${SERVER_PATH}/garrysmod/cfg/server.cfg"
-		echo "$target" >> "${SERVER_PATH}/garrysmod/cfg/server.cfg"
+		echo "" >> "${CFG_PATH}"
+		echo "$target" >> "${CFG_PATH}"
 		
 	else
-		echo "can't set $1 because there are multiple in"
+		echo "[initConfig.sh]can't set $1 because there are multiple in"
 	fi
 }
 
 #create default server.config
 # not empty: grep -q '[^[:space:]]' < 'server.cfg' && echo "not empty"
-if [ ! -e "${SERVER_PATH}/garrysmod/cfg/server.cfg" ] || [ "0" = "$(grep -oc '[^[:space:]]' "${SERVER_PATH}/garrysmod/cfg/server.cfg")" ]; then
+if [ ! -e "${CFG_PATH}" ] || [ "0" = "$(grep -oc '[^[:space:]]' "${CFG_PATH}")" ]; then
 	mkdir -p "${SERVER_PATH}/garrysmod/cfg" || true
-	cp -f "/home/server.cfg.default" "${SERVER_PATH}/garrysmod/cfg/server.cfg"
-	chown "$USER_ID:$GROUP_ID" "${SERVER_PATH}/garrysmod/cfg/server.cfg"
-	chmod u+rw "${SERVER_PATH}/garrysmod/cfg/server.cfg"
+	cp -f "/home/server.cfg.default" "${CFG_PATH}"
+	chown "$USER_ID:$GROUP_ID" "${CFG_PATH}"
+	chmod u+rw "${CFG_PATH}"
 fi
 
-#set hostname & password, working if only one entry is in
+# set hostname & password, working if only one entry is in
 if [ -n "${SERVER_NAME}" ]; then
 	configReplace "hostname" "$SERVER_NAME"
 fi
