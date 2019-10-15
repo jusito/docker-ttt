@@ -9,28 +9,16 @@ set -o nounset
 #./prepareServer.sh: 9: set: Illegal option -o pipefail
 #set -o pipefail
 
+LGSM_SERVER_CONFIG="/home/steam/lgsm/config-lgsm/gmodserver/common.cfg"
+
 mkdir -p "/home/steam/lgsm/config-lgsm/gmodserver/"
-cp -f "/home/common.cfg" "/home/steam/lgsm/config-lgsm/gmodserver/common.cfg"
+cp -f "/home/common.cfg" "$LGSM_SERVER_CONFIG" # common.cfg should be target, but is wrong, maybe a bug. (gmodserver working)
 
 cd "/home"
-echo "check configurations"
+echo "[prepareServer.sh]check configurations"
 ./initConfig.sh
-echo "force workshop download"
+echo "[prepareServer.sh]force workshop download"
 ./forceWorkshopDownload.sh
-echo "install & mount gamefiles"
+echo "[prepareServer.sh]install & mount gamefiles"
 ./installAndMountAddons.sh
 cd "$STEAM_PATH"
-
-#docker args -> lgsm args
-temp=""
-temp=$(printf "%s "  "$@") || true
-export parms="-game garrysmod $SERVER_GAMEMODE $temp"
-if [ -e "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg" ]; then
-	rm -f "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg"
-fi
-mkdir -p "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/"
-touch "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg"
-echo "fn_parms(){" > "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg"
-echo "parms="'"'"$parms"'"' >> "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg"
-echo "}" >> "${STEAM_PATH}/lgsm/config-lgsm/gmodserver/gmodserver.cfg"
-echo "starting with $parms"
