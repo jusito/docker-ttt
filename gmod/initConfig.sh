@@ -48,6 +48,9 @@ fi
 if [ -n "${SERVER_PASSWORD}" ]; then
 	configReplace "sv_password" "$SERVER_PASSWORD"
 fi
+if [ -n "${SERVER_RCON_PASSWORD}" ]; then
+	configReplace "rcon_password" "$SERVER_RCON_PASSWORD"
+fi
 if [ -n "${SERVER_VOICE_ENABLE}" ]; then
 	configReplace "sv_voiceenable" "$SERVER_VOICE_ENABLE"
 fi
