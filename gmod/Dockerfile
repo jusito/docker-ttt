@@ -81,4 +81,21 @@ RUN chown "$DOCKER_USER:$DOCKER_USER" /home/prepareServer.sh && \
 	chmod a=rx /home/prepareServer.sh && \
 	chmod a=rx /home/initConfig.sh && \
 	chmod a=rx /home/forceWorkshopDownload.sh && \
-	chmod a=rx /home/installAndMountAddons.sh
+	chmod a=rx /home/installAndMountAddons.sh && \
+	\
+	/home/createAlias.sh "details" '/home/steam/gmodserver details' && \
+	/home/createAlias.sh "backup" '/home/steam/gmodserver backup' && \
+	/home/createAlias.sh "console" '/home/steam/gmodserver console' && \
+	/home/createAlias.sh "debug" '/home/steam/gmodserver debug' && \
+	/home/createAlias.sh "details" '/home/steam/gmodserver details' && \
+	/home/createAlias.sh "force-update" '/home/steam/gmodserver force-update' && \
+	/home/createAlias.sh "install" '/home/steam/gmodserver install' && \
+	/home/createAlias.sh "monitor" '/home/steam/gmodserver monitor' && \
+	/home/createAlias.sh "postdetails" '/home/steam/gmodserver postdetails' && \
+	/home/createAlias.sh "restart" '/home/steam/gmodserver restart' && \
+	/home/createAlias.sh "start" '/home/steam/gmodserver start' && \
+	/home/createAlias.sh "stop" '/home/steam/gmodserver stop' && \
+	/home/createAlias.sh "test-alert" '/home/steam/gmodserver test-alert' && \
+	/home/createAlias.sh "update" '/home/steam/gmodserver update' && \
+	/home/createAlias.sh "update-lgsm" '/home/steam/gmodserver update-lgsm' && \
+	/home/createAlias.sh "validate" '/home/steam/gmodserver validate'

@@ -34,7 +34,7 @@ ENTRYPOINT ["./home/entrypoint.sh"]
 
 #WORKDIR "$STEAM_PATH"
 	
-COPY ["entrypoint.sh", "initCron.sh", "/home/"]
+COPY ["entrypoint.sh", "initCron.sh", "createAlias.sh", "/home/"]
 
 # procps needed for ps command
 # iproute2 needed because of "-slim"
@@ -52,6 +52,7 @@ RUN dpkg --add-architecture i386 && \
 	chown -R "$DOCKER_USER:$DOCKER_USER" "$STEAM_PATH" && \
 	chmod a=rx /home/entrypoint.sh && \
 	chmod a=rx /home/initCron.sh && \
+	chmod a=rx /home/createAlias.sh && \
 	\
 	ulimit -n 2048 && \
 	\
