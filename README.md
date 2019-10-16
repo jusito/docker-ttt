@@ -1,6 +1,9 @@
 # GMOD TTT
 GMOD TTT server image, https://hub.docker.com/r/jusito/
 
+## Important
+If you use the old image, you should check the environment variables. For example arguments after image name aren't used, use instead `-e SERVER_ADDITIONAL_PARAMETERS=...`.
+This readme may not be perfect, if you struggle at some point or you see incorrect informations create an issue at git please.
 
 ## Getting Started
 ### Prepare your server content
