@@ -4,7 +4,7 @@
 #set -o pipefail
 #set -o nounset 
 
-docker build -t "$DOCKER_REPO:lgsm_debian" "lgsm/"
+#docker build -t "$DOCKER_REPO:lgsm_debian" "lgsm/"
 docker build -t "$DOCKER_REPO:gmod_debian" "gmod/"
 docker build -t "$DOCKER_REPO:gmod_ttt_debian" "TTT/"
 docker build -t "$DOCKER_REPO:latest" "TTT/"
