@@ -16,15 +16,17 @@ GMOD TTT server image, https://hub.docker.com/r/jusito/
 4. Get a volume name `-v TTTDev:/home/steam/serverfiles`
 
 ### run example without rcon
+If you need rcon only sometimes, use ulx with this config.
+
 ```
 docker run -d \
  -p 27015:27015/udp \
  -e SERVER_PORT=27015 \
  -e INSTALL_CSS=true \
- -e host_workshop_collection 123456 \
+ -e WORKSHOP_COLLECTION_ID=123456 \
  -e SERVER_NAME="My Server" \
  -e SERVER_PASSWORD="securepw" \
- -e SERVER_DEFAULT_MAP="ttt_rooftops_2016_v1" \
+ -e SERVER_DEFAULT_MAP="ttt_lttp_kakariko_a4" \
  -v TTTDev:/home/steam/serverfiles \
  --name "MyTTTServer" \
  jusito/docker-ttt:gmod_ttt_debian
@@ -36,10 +38,10 @@ docker run -d \
  -p 27015:27015/udp \
  -e SERVER_PORT=27015 \
  -e INSTALL_CSS=true \
- -e host_workshop_collection 123456 \
+ -e WORKSHOP_COLLECTION_ID=123456 \
  -e SERVER_NAME="My Server" \
  -e SERVER_PASSWORD="securepw" \
- -e SERVER_DEFAULT_MAP="ttt_rooftops_2016_v1" \
+ -e SERVER_DEFAULT_MAP="ttt_lttp_kakariko_a4" \
  -v TTTDev:/home/steam/serverfiles \
  -p 27015:27015/tcp \
  -e SERVER_RCON_PASSWORD="securePW" \
