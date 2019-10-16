@@ -4,7 +4,7 @@ GMOD TTT server image, https://hub.docker.com/r/jusito/
 
 ## Getting Started
 ### Prepare your server content
-1. Create public workshop collection without maps, dummy ID:=123456. Use `-e host_workshop_collection 123456`.
+1. Create public workshop collection without maps, dummy ID:=123456. Use `-e WORKSHOP_COLLECTION_ID 123456`.
 2. Create public workshop collection with maps and add this one to "123456".
 3. Do you want every user to load the content automatically? Yes you are done, no `-e WORKSHOP_AUTOLOAD=false`. Remember that "false" mean, that every user has to manually subscribe to your collection. If you don't separate maps / others, every connecting user would load all maps on first connecting. This would be a pain for some.
 4. Do your content needs CSS, HL2, HLDM, TF2? Use `-e INSTALL_CSS=true` and/or `-e INSTALL_HL2=true` and so on. Most content will need at least CSS.
@@ -114,7 +114,6 @@ SERVER_PASSWORD=Secure_PW
 |WORKSHOP\_COLLECTION_ID|""|Workshop Collection ID for the server. If you use AUTOLOAD you should add maps on a linked collection|
 |WORKSHOP\_API_KEY|""|Maybe needed for private content.|
 |WORKSHOP\_AUTOLOAD|true|Every item which is on the given collection, will be downloaded by every client. Elements on linked collections not - so use maps in a linked collection.|
-|USE\_MY\_REPLACER\_CONFIG|false|Download my config for "entity replacer". You need the mod too.|
 
 #### GMOD Server
 |Name|Default|Description|
@@ -228,7 +227,7 @@ http://ttt.badking.net/config-and-commands/convars
 https://wiki.garrysmod.de/server.cfg
 
 Path in container is:
-docker cp "your server.cfg path" CONTAINER:/home/steam/serverfiles/garrysmod/cfg/server.cfg
+docker cp "your server.cfg path" CONTAINER:/home/steam/serverfiles/garrysmod/cfg/gmodserver.cfg
 
 
 ## Additional
