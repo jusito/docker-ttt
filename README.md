@@ -24,7 +24,7 @@ docker run -d \
  -e host_workshop_collection 123456 \
  -e SERVER_NAME="My Server" \
  -e SERVER_PASSWORD="securepw" \
- -e SERVER_DEFAULT_MAP="map ttt_rooftops_2016_v1" \
+ -e SERVER_DEFAULT_MAP="ttt_rooftops_2016_v1" \
  -v TTTDev:/home/steam/serverfiles \
  --name "MyTTTServer" \
  jusito/docker-ttt:gmod_ttt_debian
@@ -39,7 +39,7 @@ docker run -d \
  -e host_workshop_collection 123456 \
  -e SERVER_NAME="My Server" \
  -e SERVER_PASSWORD="securepw" \
- -e SERVER_DEFAULT_MAP="map ttt_rooftops_2016_v1" \
+ -e SERVER_DEFAULT_MAP="ttt_rooftops_2016_v1" \
  -v TTTDev:/home/steam/serverfiles \
  -p 27015:27015/tcp \
  -e SERVER_RCON_PASSWORD="securePW" \
