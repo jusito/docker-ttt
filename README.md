@@ -13,6 +13,7 @@ GMOD TTT server image, https://hub.docker.com/r/jusito/
 1. Pick your ports `-e SERVER_PORT=27015 -p 27015:27015/udp` both are always needed. For RCON `[...] -e SERVER_RCON_PASSWORD="verySecure" -p 27015:27015/tcp`.
 2. Set environment variables like servername `-e SERVER_NAME="My Server"`, password `-e SERVER_PASSWORD="securepw"` and timezone for cron `-e TZ="Europe/Berlin"`, default short downtime at Sunday 10 o'clock.
 3. Choose startmap (can be from workshop collection, even linked) `-e SERVER_DEFAULT_MAP=ttt_rooftops_2016_v1` and max players `-e SERVER_MAX_PLAYERS=20`
+4. Get a volume name `-v TTTDev:/home/steam/serverfiles`
 
 ### run example without rcon
 ```
@@ -24,6 +25,7 @@ docker run -d \
  -e SERVER_NAME="My Server" \
  -e SERVER_PASSWORD="securepw" \
  -e SERVER_DEFAULT_MAP="map ttt_rooftops_2016_v1" \
+ -v TTTDev:/home/steam/serverfiles \
  --name "MyTTTServer" \
  jusito/docker-ttt:gmod_ttt_debian
 ```
@@ -38,6 +40,7 @@ docker run -d \
  -e SERVER_NAME="My Server" \
  -e SERVER_PASSWORD="securepw" \
  -e SERVER_DEFAULT_MAP="map ttt_rooftops_2016_v1" \
+ -v TTTDev:/home/steam/serverfiles \
  -p 27015:27015/tcp \
  -e SERVER_RCON_PASSWORD="securePW" \
  --name "MyTTTServer" \
@@ -131,6 +134,7 @@ SERVER_PASSWORD=Secure_PW
 	
 #### GMOD LGSM specific
 These variables are untested, but if they dont work report it please too. [Documentation](https://docs.linuxgsm.com/alerts)
+
 |Name|Default|Description|
 |----|-------|-----------|
 |LGSM\_DISPLAYIP|""||
@@ -231,12 +235,10 @@ docker cp "your server.cfg path" CONTAINER:/home/steam/serverfiles/garrysmod/cfg
 
 ### TODO
 #### image improvements
-* replacer config in other repo u2d?
 * volume for steam workshop
 * volume for other games
-* volume for gmod config
+* volume for gmod config (data folder)
 * AppArmor Profile
-* alias for lgsm commands?
 
 #### image config, description needed
 * scrds doesn't like different internal / external ports (thats why no ports are exposed)
