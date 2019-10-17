@@ -5,7 +5,9 @@
 #set -o nounset 
 
 #docker build -t "$DOCKER_REPO:lgsm_debian" "lgsm/"
-docker build -f gmod/Dockerfile -t "$DOCKER_REPO:gmod_debian" "gmod/"
-docker build -f TTT/Dockerfile -t "$DOCKER_REPO:gmod_ttt_debian" "TTT/"
+docker build -f gmod/Dockerfile -t "$DOCKER_REPO:gmod_debian" "."
+docker build -f TTT/Dockerfile -t "$DOCKER_REPO:gmod_ttt_debian" "."
 docker tag "$DOCKER_REPO:gmod_ttt_debian" "$DOCKER_REPO:latest"
 docker push "$DOCKER_REPO:latest"
+docker push "$DOCKER_REPO:gmod_debian"
+docker push "$DOCKER_REPO:gmod_ttt_debian"
