@@ -4,6 +4,8 @@
 #set -o pipefail
 #set -o nounset 
 
+ls -lA
+
 #docker build -t "$DOCKER_REPO:lgsm_debian" "lgsm/"
 docker build -f gmod/Dockerfile -t "$DOCKER_REPO:gmod_debian" "."
 docker build -f TTT/Dockerfile -t "$DOCKER_REPO:gmod_ttt_debian" "."
