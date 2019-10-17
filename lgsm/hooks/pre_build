@@ -5,3 +5,4 @@
 #set -o nounset 
 
 ls -lA
+ls -lA ..
