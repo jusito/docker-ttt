@@ -12,7 +12,7 @@ set -o pipefail
 
 #bash test/testStyle.sh
 
-bash testBuild.sh
+bash test/testBuild.sh
 
 
 echo "[testRun][INFO]running"

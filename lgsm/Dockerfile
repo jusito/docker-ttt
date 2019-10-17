@@ -34,7 +34,7 @@ ENTRYPOINT ["./home/entrypoint.sh"]
 
 #WORKDIR "$STEAM_PATH"
 	
-COPY ["entrypoint.sh", "initCron.sh", "createAlias.sh", "/home/"]
+COPY ["lgsm/entrypoint.sh", "lgsm/initCron.sh", "lgsm/createAlias.sh", "/home/"]
 
 # procps needed for ps command
 # iproute2 needed because of "-slim"

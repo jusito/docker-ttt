@@ -72,7 +72,7 @@ ENV CSS_PATH="/home/steam/addons/css" \
 	USE_MY_REPLACER_CONFIG=false
 	
 
-COPY ["prepareServer.sh", "initConfig.sh", "forceWorkshopDownload.sh", "installAndMountAddons.sh", "common.cfg", "/home/"]
+COPY ["gmod/prepareServer.sh", "gmod/initConfig.sh", "gmod/forceWorkshopDownload.sh", "gmod/installAndMountAddons.sh", "gmod/common.cfg", "/home/"]
 
 RUN chown "$DOCKER_USER:$DOCKER_USER" /home/prepareServer.sh && \
 	chown "$DOCKER_USER:$DOCKER_USER" /home/initConfig.sh && \

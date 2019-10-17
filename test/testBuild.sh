@@ -13,10 +13,10 @@ set -o pipefail
 echo "[testBuild][INFO]build"
 
 docker rmi "jusito/docker-ttt:lgsm_debian" || true
-docker build -t "jusito/docker-ttt:lgsm_debian" "./lgsm/"
+docker build -f lgsm/Dockerfile -t "jusito/docker-ttt:lgsm_debian" "."
 
 docker rmi "jusito/docker-ttt:gmod_debian" || true
-docker build -t "jusito/docker-ttt:gmod_debian" "./gmod/"
+docker build -f gmod/Dockerfile -t "jusito/docker-ttt:gmod_debian" "."
 
 docker rmi "jusito/docker-ttt:gmod_ttt_debian" || true
-docker build -t "jusito/docker-ttt:gmod_ttt_debian" "./TTT/"
+docker build -f TTT/Dockerfile -t "jusito/docker-ttt:gmod_ttt_debian" "."
