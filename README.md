@@ -222,7 +222,7 @@ The container provides links to [LGSM commands](https://docs.linuxgsm.com/comman
 /home/steam/serverfiles
 
 ### Other
-server.cfg: /home/steam/serverfiles/garrysmod/cfg/gmodserver.cfg
+server.cfg: /home/steam/serverfiles/garrysmod/cfg/gmodserver.cfg \
 hostname, password, rcon password, voice enabled are managed / will be overwritten
 
 ## server config
