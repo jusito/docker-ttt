@@ -253,3 +253,32 @@ navigate to directory with readme.md
 bash test/testBuild.sh (sh doesn't like pipefail, escape if you want to use sh)
 
 
+## FTP Server
+* If your Volume is TTTDev
+* If you didn't change UserID / GroupID
+* If you want to connect to ftp://...:123 (ports 122/123 are free on your network)
+
+### For FileZilla
+
+```
+docker run -d \
+ -e MY_NAME="docker" -e MY_PASSWORD="MySecurePW" \
+ -e MY_USER_ID="10000" -e MY_GROUP_ID="10000" \
+ -p 122:20 -p 123:21 -p 10090-10100:10090-10100 \
+ -v TTTDev:/home/docker/ \
+ jusito/vsftpd-alpine:simple
+```
+
+### For Windows Network Mount
+* IP of the Host (not container) 1.2.3.4
+* Mount: ftp://1.2.3.4:123
+
+```
+docker run -d \
+ -e MY_NAME="docker" -e MY_PASSWORD="MySecurePW" \
+ -e MY_USER_ID="10000" -e MY_GROUP_ID="10000" \
+ -p 122:20 -p 123:21 -p 10090-10100:10090-10100 \
+ -v TTTDev:/home/docker/ \
+ -e pasv_address="1.2.3.4" \
+ jusito/vsftpd-alpine:simple
+```
