@@ -4,7 +4,7 @@ FROM debian:stretch-slim
 # C.UTF-8 -> en_US.UTF-8
 ENV STEAM_PATH="/home/steam" \
 	SERVER_PATH="/home/steam/serverfiles" \
-	STEAM_CMD="/home/steam/steamcmd" \
+	STEAM_CMD="/home/steam/.steam/steamcmd" \
 	GROUP_ID=10000 \
 	USER_ID=10000 \
 	DOCKER_USER=steam \
@@ -40,8 +40,8 @@ COPY ["entrypoint.sh", "initCron.sh", "createAlias.sh", "/home/"]
 # iproute2 needed because of "-slim"
 RUN dpkg --add-architecture i386 && \
 	apt-get update -y && \
-	apt-get install -y mailutils postfix curl wget file bzip2 gzip unzip bsdmainutils python util-linux ca-certificates \
-		binutils bc jq tmux lib32gcc1 libstdc++6 libstdc++6:i386 lib32tinfo5 \
+	apt-get install -y mailutils postfix curl wget file tar bzip2 gzip unzip bsdmainutils python util-linux ca-certificates \
+		binutils bc jq tmux lib32gcc1 libstdc++6 lib32stdc++6 libtinfo5:i386 netcat \
 		procps iproute2 && \
 	\
 	groupadd -g $GROUP_ID $DOCKER_USER && \
