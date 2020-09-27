@@ -12,14 +12,15 @@ CFG_PATH="${SERVER_PATH}/garrysmod/cfg/gmodserver.cfg"
 
 function configReplace() {
 	source="$1"
-	target="\"$2\""
+	target="\"$(echo "$target" | sed 's/\\/\\\\/g' | sed 's/\//\\\//g')\""
 	
 	count=$(grep -Poc "($source).+" "${CFG_PATH}")
 	
 	echo "[initConfig.sh]Request for replacing $source to $target, source is found $count times"
 	
 	if [ "$count" == "1" ]; then
-		sed -Ei "s/${source}.*/${source} ${target}/g" "${CFG_PATH}"
+		sed -Ei "/${source}.*/d" "${CFG_PATH}"
+		echo "$target" >> "${CFG_PATH}"
 		
 	elif [ "$count" == "0" ]; then
 		echo "" >> "${CFG_PATH}"
