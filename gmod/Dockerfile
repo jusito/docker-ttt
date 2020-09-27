@@ -1,4 +1,6 @@
-FROM jusito/docker-ttt:lgsm_debian
+ARG SUFFIX=""
+
+FROM jusito/docker-ttt:lgsm_debian${SUFFIX}
 
 # Const \\ Overwrite Env \\ Configs optional
 ENV CSS_PATH="/home/steam/addons/css" \
