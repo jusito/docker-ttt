@@ -6,7 +6,7 @@ set -o nounset
 
 imageSuffix=""
 if [ "$SOURCE_BRANCH" != "master" ]; then
-	imageSuffix="-dev"
+	imageSuffix="-$(echo "$SOURCE_BRANCH" | sed 's/\//-/g')"
 fi
 
 #docker build -t "$DOCKER_REPO:lgsm_debian${imageSuffix}" "lgsm/"
