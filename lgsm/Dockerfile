@@ -1,4 +1,4 @@
-ARG ARCH=""
+ARG ARCH="arm64v8/"
 
 FROM ${ARCH}debian:stretch-slim
 
