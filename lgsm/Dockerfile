@@ -40,10 +40,13 @@ COPY ["entrypoint.sh", "initCron.sh", "createAlias.sh", "/home/"]
 
 # procps needed for ps command
 # iproute2 needed because of "-slim"
-RUN dpkg --add-architecture i386 && \
+# lib32gcc1 ?-> lib32gcc1-amd64-cross / lib32gcc1-x32-cross
+# lib32stdc++6 ?-> lib32stdc++6-amd64-cross / lib32stdc++6-x32-cross
+# libtinfo5:i686 ?-> libtinfo5:armhf
+RUN dpkg --add-architecture armhf && \
 	apt-get update -y && \
 	apt-get install -y mailutils postfix curl wget file tar bzip2 gzip unzip bsdmainutils python util-linux ca-certificates \
-		binutils bc jq tmux lib32gcc1 libstdc++6 lib32stdc++6 libtinfo5:i386 netcat \
+		binutils bc jq tmux lib32gcc1 lib32gcc1-amd64-cross lib32stdc++6-amd64-cross libtinfo5:armhf netcat \
 		procps iproute2 && \
 	\
 	groupadd -g $GROUP_ID $DOCKER_USER && \
