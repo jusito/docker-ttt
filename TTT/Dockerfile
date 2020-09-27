@@ -1,4 +1,6 @@
-FROM jusito/docker-ttt:gmod_debian
+ARG SUFFIX=""
+
+FROM jusito/docker-ttt:gmod_debian${SUFFIX}
 	
 ENV SERVER_GAMEMODE="terrortown"
 
