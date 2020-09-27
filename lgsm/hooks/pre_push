@@ -1,17 +1,19 @@
 #!/bin/sh
 
-#set -o errexit
+set -o errexit
 #set -o pipefail
-#set -o nounset 
+set -o nounset 
 
-#docker build -t "$DOCKER_REPO:lgsm_debian" "lgsm/"
+imageSuffix=""
+if [ "$SOURCE_BRANCH" != "master" ]; then
+	imageSuffix="-$(echo "$SOURCE_BRANCH" | sed 's/\//-/g')"
+fi
+
+#docker build -t "$DOCKER_REPO:lgsm_debian${imageSuffix}" "lgsm/"
 cd ..
-docker build -t "$DOCKER_REPO:gmod_debian" "gmod/"
-docker build -t "$DOCKER_REPO:gmod_ttt_debian" "TTT/"
-docker tag "$DOCKER_REPO:gmod_ttt_debian" "$DOCKER_REPO:latest"
 
-docker push "$DOCKER_REPO:gmod_debian"
-docker push "$DOCKER_REPO:gmod_ttt_debian"
-docker push "$DOCKER_REPO:latest"
+bash test/testBuild.sh "$imageSuffix" true
 
-
+docker push "$DOCKER_REPO:gmod_debian${imageSuffix}"
+docker push "$DOCKER_REPO:gmod_ttt_debian${imageSuffix}"
+docker push "$DOCKER_REPO:latest${imageSuffix}"
