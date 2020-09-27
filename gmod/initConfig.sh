@@ -12,7 +12,7 @@ CFG_PATH="${SERVER_PATH}/garrysmod/cfg/gmodserver.cfg"
 
 function configReplace() {
 	source="$1"
-	target="$2"
+	target="\"$2\""
 	
 	count=$(grep -Poc "($source).+" "${CFG_PATH}")
 	
