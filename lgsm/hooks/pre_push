@@ -6,8 +6,8 @@
 
 #docker build -t "$DOCKER_REPO:lgsm_debian-arm64v8" --build-arg ARCH=arm64v8 "lgsm/"
 cd ..
-docker build -t "$DOCKER_REPO:gmod_debian" --build-arg SUFFIX="-arm64v8" "gmod/"
-docker build -t "$DOCKER_REPO:gmod_ttt_debian" --build-arg SUFFIX="-arm64v8" "TTT/"
+docker build -t "$DOCKER_REPO:gmod_debian-arm64v8" --build-arg SUFFIX="-arm64v8" "gmod/"
+docker build -t "$DOCKER_REPO:gmod_ttt_debian-arm64v8" --build-arg SUFFIX="-arm64v8" "TTT/"
 #docker tag "$DOCKER_REPO:gmod_ttt_debian" "$DOCKER_REPO:latest"
 
 docker push "$DOCKER_REPO:gmod_debian-arm64v8"
