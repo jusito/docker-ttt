@@ -19,11 +19,12 @@ function configReplace() {
 	echo "[initConfig.sh]Request for replacing $source to $target, source is found $count times"
 	
 	if [ "$count" == "1" ]; then
-		sed -Ei "s/${source}.*/${source} ${target}/g" "${CFG_PATH}"
+		sed -Ei "/${source}.*/d" "${CFG_PATH}"
+		echo "$source $target" >> "${CFG_PATH}"
 		
 	elif [ "$count" == "0" ]; then
 		echo "" >> "${CFG_PATH}"
-		echo "$target" >> "${CFG_PATH}"
+		echo "$source $target" >> "${CFG_PATH}"
 		
 	else
 		echo "[initConfig.sh]can't set $1 because there are multiple in"
