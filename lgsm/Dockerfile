@@ -1,4 +1,4 @@
-FROM debian:stretch-slim
+FROM debian:buster-slim
 
 # Const \\ Overwrite Env \\ Configs possible \\ Configs needed 
 # C.UTF-8 -> en_US.UTF-8
