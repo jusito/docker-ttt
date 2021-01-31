@@ -284,4 +284,4 @@ docker run -d \
 ```
 
 ## Synchronize the voice enabled / disabled state with Teamspeak
-(See jusito/ttt_voice_sync)[https://hub.docker.com/r/jusito/ttt_voice_sync]
+[See jusito/ttt_voice_sync](https://hub.docker.com/r/jusito/ttt_voice_sync)
