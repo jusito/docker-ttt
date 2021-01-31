@@ -29,7 +29,7 @@ docker run -d \
  -e WORKSHOP_COLLECTION_ID=123456 \
  -e SERVER_NAME="My Server" \
  -e SERVER_PASSWORD="securepw" \
- -e SERVER_DEFAULT_MAP="ttt_lttp_kakariko_a4" \
+ -e SERVER_DEFAULT_MAP="ttt_lttp_kakariko_a5" \
  -v TTTDev:/home/steam/serverfiles \
  --name "MyTTTServer" \
  jusito/docker-ttt:gmod_ttt_debian
@@ -44,7 +44,7 @@ docker run -d \
  -e WORKSHOP_COLLECTION_ID=123456 \
  -e SERVER_NAME="My Server" \
  -e SERVER_PASSWORD="securepw" \
- -e SERVER_DEFAULT_MAP="ttt_lttp_kakariko_a4" \
+ -e SERVER_DEFAULT_MAP="ttt_lttp_kakariko_a5" \
  -v TTTDev:/home/steam/serverfiles \
  -p 27015:27015/tcp \
  -e SERVER_RCON_PASSWORD="securePW" \
