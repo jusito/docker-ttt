@@ -1,7 +1,6 @@
 #!/bin/sh
 
 set -o errexit
-#set -o pipefail
 set -o nounset 
 
 imageSuffix=""
@@ -9,10 +8,9 @@ if [ "$SOURCE_BRANCH" != "master" ]; then
 	imageSuffix="-$(echo "$SOURCE_BRANCH" | sed 's/\//-/g')"
 fi
 
-#docker build -t "$DOCKER_REPO:lgsm_debian${imageSuffix}" "lgsm/"
 cd ..
 
-bash test/testBuild.sh "$imageSuffix" true
+bash test/testBuild.sh "$imageSuffix"
 
 docker push "$DOCKER_REPO:gmod_debian${imageSuffix}"
 docker push "$DOCKER_REPO:gmod_ttt_debian${imageSuffix}"

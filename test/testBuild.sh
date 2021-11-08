@@ -2,7 +2,7 @@
 
 readonly SUFFIX="$1"
 readonly BUILD_LGSM="$(grep -qF '--skip-lgsm' <<< "$@" && echo false || echo true)"
-readonly repository="index.docker.io/jusito/docker-ttt"
+readonly repository="${DOCKER_REPO:-jusito/docker-ttt}"
 
 if [ "${DEBUGGING}" = "true" ]; then
 	set -o xtrace
