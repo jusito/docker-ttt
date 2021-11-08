@@ -26,7 +26,7 @@ function process() {
 	fi
 }
 
-echo "[testBuild][INFO]build"
+echo "[testBuild][INFO] build"
 
 if "$BUILD_LGSM"; then
 	process "lgsm_debian" "lgsm/"
@@ -39,3 +39,5 @@ docker tag "$repository:gmod_ttt_debian${SUFFIX}" "$repository:latest${SUFFIX}"
 if "$PUSH"; then
 	docker push "$repository:lgsm_debian${SUFFIX}"
 fi
+
+echo "[testBuild][INFO] build done!"
