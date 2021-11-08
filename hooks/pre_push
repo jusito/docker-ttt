@@ -8,4 +8,7 @@ if [ "$SOURCE_BRANCH" != "master" ]; then
 	imageSuffix="-$(echo "$SOURCE_BRANCH" | sed 's/\//-/g')"
 fi
 
+echo "current directory:"
+echo "$(pwd)"
+ls -lA .
 bash test/testBuild.sh "$imageSuffix" --skip-ttt --push
