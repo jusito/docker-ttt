@@ -17,11 +17,11 @@ set -o pipefail
 
 function process() {
 	tag_prefix="$1"
-	subdir="$2"
+	target="$2"
 	cache_option="$(grep -qF -e '--no-cache' <<< "$@" && echo "--no-cache" || echo "")"
 
 	docker rmi "$repository:$tag_prefix${SUFFIX}" || true
-	docker build --target "$subdir" $cache_option -t "$repository:$tag_prefix${SUFFIX}" "$subdir/"
+	docker build --target "$target" $cache_option -t "$repository:$tag_prefix${SUFFIX}" .
 	if "$PUSH"; then
 		docker push "$repository:$tag_prefix${SUFFIX}"
 	fi
