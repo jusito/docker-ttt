@@ -10,8 +10,4 @@ fi
 
 cd ..
 
-bash test/testBuild.sh "$imageSuffix"
-
-docker push "$DOCKER_REPO:gmod_debian${imageSuffix}"
-docker push "$DOCKER_REPO:gmod_ttt_debian${imageSuffix}"
-docker push "$DOCKER_REPO:latest${imageSuffix}"
+bash test/testBuild.sh "$imageSuffix" --push
