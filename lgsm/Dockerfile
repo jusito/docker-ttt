@@ -33,7 +33,7 @@ ENV STEAM_PATH="/home/steam" \
 ENTRYPOINT ["./home/entrypoint.sh"]
 
 #WORKDIR "$STEAM_PATH"
-	
+
 COPY ["entrypoint.sh", "initCron.sh", "createAlias.sh", "/home/"]
 
 # procps needed for ps command
@@ -41,8 +41,8 @@ COPY ["entrypoint.sh", "initCron.sh", "createAlias.sh", "/home/"]
 RUN dpkg --add-architecture i386 && \
 	apt-get update -y && \
 	apt-get install -y mailutils postfix curl wget file tar bzip2 gzip unzip bsdmainutils python util-linux ca-certificates \
-		binutils bc jq tmux lib32gcc1 libstdc++6 lib32stdc++6 libtinfo5:i386 netcat \
-		procps iproute2 && \
+	binutils bc jq tmux lib32gcc1 libstdc++6 lib32stdc++6 libtinfo5:i386 netcat libsdl2-2.0-0:i386 \
+	procps iproute2 && \
 	\
 	groupadd -g $GROUP_ID $DOCKER_USER && \
 	useradd -d "$STEAM_PATH" -g $GROUP_ID -u $USER_ID -m $DOCKER_USER && \
