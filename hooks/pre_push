@@ -8,6 +8,4 @@ if [ "$SOURCE_BRANCH" != "master" ]; then
 	imageSuffix="-$(echo "$SOURCE_BRANCH" | sed 's/\//-/g')"
 fi
 
-cd ..
-
 bash test/testBuild.sh "$imageSuffix" --skip-ttt --push
