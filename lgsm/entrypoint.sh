@@ -18,7 +18,7 @@ set -e
 
 # --- Install / Update ---
 cd "$STEAM_PATH"
-if [ -n "$SERVER_EXECUTABLE" ] && [ -e "${STEAM_PATH}/$SERVER_EXECUTABLE" ]; then
+if [ -n "$SERVER_EXECUTABLE" ] && [ -e "${STEAM_PATH}/$SERVER_EXECUTABLE" ] && [ -d "$STEAM_CMD" ]; then
 	echo "[entrypoint.sh]updating..."
 	./"$SERVER_EXECUTABLE" update-lgsm
 	./"$SERVER_EXECUTABLE" update
