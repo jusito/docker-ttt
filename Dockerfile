@@ -40,9 +40,9 @@ COPY ["lgsm/entrypoint.sh", "lgsm/initCron.sh", "lgsm/createAlias.sh", "/home/"]
 # iproute2 needed because of "-slim"
 RUN dpkg --add-architecture i386 && \
 	apt-get update -y && \
-	apt-get install -y mailutils postfix curl wget file tar bzip2 gzip unzip bsdmainutils python util-linux ca-certificates \
-	binutils bc jq tmux lib32gcc1 libstdc++6 lib32stdc++6 libtinfo5:i386 netcat libsdl2-2.0-0:i386 \
-	procps iproute2 && \
+	apt-get install -y bc binutils bsdmainutils bzip2 ca-certificates cpio curl file gzip hostname jq lib32gcc1 lib32stdc++6 netcat python3 tar tmux unzip util-linux wget xz-utils lib32gcc1 lib32stdc++6 libsdl2-2.0-0:i386 \
+		libtinfo5:i386 \
+		procps iproute2 && \
 	\
 	groupadd -g $GROUP_ID $DOCKER_USER && \
 	useradd -d "$STEAM_PATH" -g $GROUP_ID -u $USER_ID -m $DOCKER_USER && \
@@ -137,6 +137,7 @@ ENV CSS_PATH="/home/steam/addons/css" \
 	INSTALL_HL2=false \
 	INSTALL_HLDM=false \
 	INSTALL_TF2=false \
+	LGSM_UPDATE=true \
 	\
 	USE_MY_REPLACER_CONFIG=false
 	
