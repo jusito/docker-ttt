@@ -40,7 +40,7 @@ COPY ["lgsm/entrypoint.sh", "lgsm/initCron.sh", "lgsm/createAlias.sh", "/home/"]
 # iproute2 needed because of "-slim"
 RUN dpkg --add-architecture i386 && \
 	apt-get update -y && \
-	apt-get install -y bc binutils bsdmainutils bzip2 ca-certificates cpio curl file gzip hostname jq lib32gcc1 lib32stdc++6 netcat python3 tar tmux unzip util-linux wget xz-utils lib32gcc1 lib32stdc++6 libsdl2-2.0-0:i386 \
+	apt-get install -y bc binutils bsdmainutils bzip2 ca-certificates cpio curl file gzip hostname jq lib32gcc1 lib32stdc++6 netcat python3 tar tmux unzip util-linux wget xz-utils lib32gcc1 lib32stdc++6 libsdl2-2.0-0:i386 distro-info \
 		libtinfo5:i386 \
 		procps iproute2 && \
 	\
