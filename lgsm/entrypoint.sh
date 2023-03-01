@@ -21,7 +21,7 @@ cd "$STEAM_PATH"
 if [ -n "$SERVER_EXECUTABLE" ] && [ -e "${STEAM_PATH}/$SERVER_EXECUTABLE" ] && [ -d "$STEAM_CMD" ]; then
 	echo "[entrypoint.sh]updating..."
 	if "$LGSM_UPDATE"; then
-		./"$SERVER_EXECUTABLE" update-lgsm | (
+		./"$SERVER_EXECUTABLE" update-lgsm || (
 			# this sometimes prevent updating, I dont get it why this is an issue
 			rm -rf "${STEAM_PATH}/lgsm/functions/lgsm"
 			./"$SERVER_EXECUTABLE" update-lgsm
