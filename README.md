@@ -16,7 +16,13 @@ This readme may not be perfect, if you struggle at some point or you see incorre
 1. Pick your ports `-e SERVER_PORT=27015 -p 27015:27015/udp` both are always needed. For RCON `[...] -e SERVER_RCON_PASSWORD="verySecure" -p 27015:27015/tcp`.
 2. Set environment variables like servername `-e SERVER_NAME="My Server"`, password `-e SERVER_PASSWORD="securepw"` and timezone for cron `-e TZ="Europe/Berlin"`, default short downtime at Sunday 10 o'clock.
 3. Choose startmap (can be from workshop collection, even linked) `-e SERVER_DEFAULT_MAP=ttt_rooftops_2016_v1` and max players `-e SERVER_MAX_PLAYERS=20`
-4. Get a volume name `-v TTTDev:/home/steam/serverfiles`
+4. Creae a directory on the hostsystem and change the owner and group of this directory.
+	* Create directory: `mkdir <path-on-host-system>` 
+	* Change owner and group of the newly created directory: `chown 10000:10000 <path-on-host-system>`
+5. Mount a volume `-v <path-on-host-system>:/home/steam/serverfiles`
+
+**Hint:** You can copy your files to into the right place in this newly created directory e.g. server.cfg (`<path-on-host-system>/garrysmod/cfg/server.cfg).
+
 
 ### run example without rcon
 If you need rcon only sometimes, use ulx with this config.
