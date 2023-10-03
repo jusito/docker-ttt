@@ -17,6 +17,7 @@ This readme may not be perfect, if you struggle at some point or you see incorre
 2. Set environment variables like servername `-e SERVER_NAME="My Server"`, password `-e SERVER_PASSWORD="securepw"` and timezone for cron `-e TZ="Europe/Berlin"`, default short downtime at Sunday 10 o'clock.
 3. Choose startmap (can be from workshop collection, even linked) `-e SERVER_DEFAULT_MAP=ttt_rooftops_2016_v1` and max players `-e SERVER_MAX_PLAYERS=20`
 4. Get a volume name `-v TTTDev:/home/steam/serverfiles`
+5. Fix filesystem permission issue: `docker run -it <MyTTTServer> chown -R 10000:10000 /home`
 
 ### run example without rcon
 If you need rcon only sometimes, use ulx with this config.
