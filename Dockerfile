@@ -13,7 +13,6 @@ ENV STEAM_PATH="/home/steam" \
 	SUPERCRONIC_SHA1SUM=fe1a81a8a5809deebebbd7a209a3b97e542e2bcd \
 	\
 	\
-	DEBIAN_FRONTEND=noninteractive \
 	LANG=C.UTF-8 \
 	TERM=xterm \
 	\
@@ -40,9 +39,9 @@ COPY ["lgsm/entrypoint.sh", "lgsm/initCron.sh", "lgsm/createAlias.sh", "/home/"]
 # iproute2 needed because of "-slim"
 RUN dpkg --add-architecture i386 && \
 	apt-get update -y && \
-	apt-get install -y bc binutils bsdmainutils bzip2 ca-certificates cpio curl file gzip hostname jq lib32gcc1 lib32stdc++6 netcat python3 tar tmux unzip util-linux wget xz-utils lib32gcc1 lib32stdc++6 libsdl2-2.0-0:i386 distro-info \
-		libtinfo5:i386 \
-		procps iproute2 && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y bc binutils bsdmainutils bzip2 ca-certificates cpio curl file gzip hostname jq lib32gcc1 lib32stdc++6 netcat python3 tar tmux unzip util-linux wget xz-utils lib32gcc1 lib32stdc++6 libsdl2-2.0-0:i386 distro-info \
+	libtinfo5:i386 \
+	procps iproute2 && \
 	\
 	groupadd -g $GROUP_ID $DOCKER_USER && \
 	useradd -d "$STEAM_PATH" -g $GROUP_ID -u $USER_ID -m $DOCKER_USER && \
@@ -140,7 +139,7 @@ ENV CSS_PATH="/home/steam/addons/css" \
 	LGSM_UPDATE=true \
 	\
 	USE_MY_REPLACER_CONFIG=false
-	
+
 
 COPY ["gmod/prepareServer.sh", "gmod/initConfig.sh", "gmod/forceWorkshopDownload.sh", "gmod/installAndMountAddons.sh", "gmod/common.cfg", "/home/"]
 
