@@ -14,7 +14,7 @@ function configReplace() {
 	source="$1"
 	target="\"$2\""
 	
-	count=$(grep -Poc "($source).+" "${CFG_PATH}")
+	count=$(grep -Poc "($source).+" "${CFG_PATH}" || echo 0)
 	
 	echo "[initConfig.sh]Request for replacing $source to $target, source is found $count times"
 	
