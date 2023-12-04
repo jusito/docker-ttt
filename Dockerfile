@@ -1,4 +1,4 @@
-FROM debian:buster-slim as lgsm
+FROM debian:12-slim as lgsm
 
 # Const \\ Overwrite Env \\ Configs possible \\ Configs needed 
 # C.UTF-8 -> en_US.UTF-8
@@ -39,7 +39,8 @@ COPY ["lgsm/entrypoint.sh", "lgsm/initCron.sh", "lgsm/createAlias.sh", "/home/"]
 # iproute2 needed because of "-slim"
 RUN dpkg --add-architecture i386 && \
 	apt-get update -y && \
-	DEBIAN_FRONTEND=noninteractive apt-get install -y bc binutils bsdmainutils bzip2 ca-certificates cpio curl file gzip hostname jq lib32gcc1 lib32stdc++6 netcat python3 tar tmux unzip util-linux wget xz-utils lib32gcc1 lib32stdc++6 libsdl2-2.0-0:i386 distro-info \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y bc binutils bsdmainutils bzip2 ca-certificates cpio curl distro-info file gzip hostname jq lib32gcc-s1 lib32stdc++6 netcat-openbsd python3 tar tmux unzip util-linux uuid-runtime wget xz-utils \
+	lib32gcc-s1 lib32stdc++6 libsdl2-2.0-0:i386 \
 	libtinfo5:i386 \
 	procps iproute2 && \
 	\
