@@ -14,7 +14,7 @@ function configReplace() {
 	source="$1"
 	target="\"$2\""
 
-	if ! echo "$2" | grep -qe "^[a-zA-Z0-9_-]*$"; then
+	if ! echo "$2" | grep -qe "^[a-zA-Z0-9_ -]*$"; then
 		echo "[initConfig.sh]Warning your configured value for $source doesn't match regex ^[a-zA-Z0-9_-]+$. Special symbols could crash this script because they are not sanitized."
 	fi
 	
