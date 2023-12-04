@@ -59,7 +59,7 @@ function stopServer() {
 	IS_RUNNING="false"
 	echo "done!"
 }
-./"$SERVER_EXECUTABLE" start &
+./"$SERVER_EXECUTABLE" start
 trap stopServer SIGTERM
 
 #start cron
@@ -71,6 +71,7 @@ bash "/home/initCron.sh"
 
 # --- Wait for Shutdown ---
 echo "Server is running, waiting for SIGTERM"
+tail -f /home/steam/log/console/gmodserver-console.log &
 while [ "$IS_RUNNING" = "true" ]
 do
 	sleep 1s
