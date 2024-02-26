@@ -10,7 +10,7 @@ services:
     environment:
       INSTALL_CSS: "true"
       INSTALL_HL2: "true"
-      SERVER_DEFAULT_MAP: ttt_lttp_kakariko_a4
+      SERVER_DEFAULT_MAP: ttt_byperbasedome
       SERVER_PORT: 27015
       SERVER_NAME: "Passiv Terror"
       SERVER_PASSWORD: Terror
