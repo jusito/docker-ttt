@@ -9,6 +9,6 @@ services:
       - 27015:27015/udp
     environment:
       SERVER_DEFAULT_MAP: ttt_byperbasedome
-      WORKSHOP_COLLECTION_ID: 3167400140
+      WORKSHOP_COLLECTION_ID: 3168851419
     volumes:
       - TTTDev:/home/steam/serverfiles
