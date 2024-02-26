@@ -8,7 +8,7 @@ services:
       - 27015:27015/tcp
       - 27015:27015/udp
     environment:
-      SERVER_DEFAULT_MAP: ttt_byperbasedome
+      SERVER_DEFAULT_MAP: ttt_lttp_kakariko_a5
       WORKSHOP_COLLECTION_ID: 3168851419
     volumes:
       - TTTDev:/home/steam/serverfiles
