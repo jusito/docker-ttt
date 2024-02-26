@@ -1,1 +1,11 @@
+volumes:
+  TTTDev:
 
+services:
+  ttt:
+    build: .
+    ports:
+      - 27015:27015/tcp
+      - 27015:27015/udp
+    volumes:
+      - TTTDev:/home/steam/serverfiles
