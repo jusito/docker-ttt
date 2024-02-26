@@ -9,13 +9,14 @@ services:
       - 27015:27015/udp
     environment:
       INSTALL_CSS: "true"
+      INSTALL_HL2: "true"
       SERVER_DEFAULT_MAP: ttt_lttp_kakariko_a4
       SERVER_PORT: 27015
-      SERVER_NAME: "Example Name"
-      SERVER_PASSWORD: securePassword
-      SERVER_VOICE_ENABLE: 0
+      SERVER_NAME: "Passiv Terror"
+      SERVER_PASSWORD: Terror
+      SERVER_VOICE_ENABLE: 1
       SERVER_MAX_PLAYERS: 20
-      SERVER_RCON_PASSWORD: securePassword
-      WORKSHOP_COLLECTION_ID: 1895900191
+      SERVER_RCON_PASSWORD: BrauchIchNicht
+      WORKSHOP_COLLECTION_ID: 3167400140
     volumes:
       - TTTDev:/home/steam/serverfiles
