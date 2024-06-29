@@ -20,7 +20,7 @@ function configReplace() {
 
     sed -E -i "/^\s${source}\s.*/d" "${CFG_PATH}"
 
-    local file_ends_on_newline=$([ "$(tail -c1 f | wc -l)" -eq 1 ] && echo true || echo false)
+    local file_ends_on_newline=$([ "$(tail -c1 "${CFG_PATH}" | wc -l)" -eq 1 ] && echo true || echo false)
     if ! $file_ends_on_newline; then
         echo "" >> "${CFG_PATH}"
     fi
