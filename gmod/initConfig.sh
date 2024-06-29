@@ -11,28 +11,20 @@ set -o pipefail
 CFG_PATH="${SERVER_PATH}/garrysmod/cfg/gmodserver.cfg"
 
 function configReplace() {
-	source="$1"
-	target="\"$2\""
+    local source="$1"
+    local target="$2"
 
-	if ! echo "$2" | grep -qe "^[a-zA-Z0-9_ -]*$"; then
-		echo "[initConfig.sh]Warning your configured value for $source doesn't match regex ^[a-zA-Z0-9_-]+$. Special symbols could crash this script because they are not sanitized."
-	fi
-	
-	count=$(grep -Poc "($source).+" "${CFG_PATH}" || echo 0)
-	
-	echo "[initConfig.sh]Request for replacing $source to $target, source is found $count times"
-	
-	if [ "$count" == "1" ]; then
-		sed -Ei "/${source}.*/d" "${CFG_PATH}"
-		echo "$source $target" >> "${CFG_PATH}"
-		
-	elif [ "$count" == "0" ]; then
-		echo "" >> "${CFG_PATH}"
-		echo "$source $target" >> "${CFG_PATH}"
-		
-	else
-		echo "[initConfig.sh]can't set $1 because there are multiple in"
-	fi
+    count=$(grep -Ece "^\s*${source}\s" "${CFG_PATH}")
+
+    echo "[initConfig.sh]Request for replacing \"$source\" to \"$target\", source is found $count times"
+
+    sed -E -i "/^\s${source}\s.*/d" "${CFG_PATH}"
+
+    local file_ends_on_newline=$([ "$(tail -c1 f | wc -l)" -eq 1 ] && echo true || echo false)
+    if ! $file_ends_on_newline; then
+        echo "" >> "${CFG_PATH}"
+    fi
+    echo "$source \"$target\"" >> "${CFG_PATH}"
 }
 
 #create default server.config
