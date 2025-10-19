@@ -37,7 +37,9 @@ COPY ["lgsm/entrypoint.sh", "lgsm/initCron.sh", "lgsm/createAlias.sh", "/home/"]
 
 # procps needed for ps command
 # iproute2 needed because of "-slim"
-RUN set -eux; \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+	set -eux; \
 	dpkg --add-architecture i386; \
 	apt-get update -y; \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y bc binutils bsdmainutils bzip2 ca-certificates cpio curl distro-info file gzip hostname jq lib32gcc-s1 lib32stdc++6 netcat-openbsd pigz python3 tar tmux unzip util-linux uuid-runtime wget xz-utils \
