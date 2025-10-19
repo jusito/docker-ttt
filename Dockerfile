@@ -8,9 +8,9 @@ ENV STEAM_PATH="/home/steam" \
 	GROUP_ID=10000 \
 	USER_ID=10000 \
 	DOCKER_USER=steam \
-	SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.28/supercronic-linux-amd64 \
+	SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.38/supercronic-linux-amd64 \
 	SUPERCRONIC=supercronic-linux-amd64 \
-	SUPERCRONIC_SHA1SUM=fe1a81a8a5809deebebbd7a209a3b97e542e2bcd \
+	SUPERCRONIC_SHA1SUM=bc072eba2ae083849d5f86c6bd1f345f6ed902d0 \
 	\
 	\
 	LANG=C.UTF-8 \
