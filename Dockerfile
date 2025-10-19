@@ -37,34 +37,35 @@ COPY ["lgsm/entrypoint.sh", "lgsm/initCron.sh", "lgsm/createAlias.sh", "/home/"]
 
 # procps needed for ps command
 # iproute2 needed because of "-slim"
-RUN dpkg --add-architecture i386 && \
-	apt-get update -y && \
-	DEBIAN_FRONTEND=noninteractive apt-get install -y bc binutils bsdmainutils bzip2 ca-certificates cpio curl distro-info file gzip hostname jq lib32gcc-s1 lib32stdc++6 netcat-openbsd python3 tar tmux unzip util-linux uuid-runtime wget xz-utils \
-	lib32gcc-s1 lib32stdc++6 libsdl2-2.0-0:i386 \
+RUN set -eux; \
+	dpkg --add-architecture i386; \
+	apt-get update -y; \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y bc binutils bsdmainutils bzip2 ca-certificates cpio curl distro-info file gzip hostname jq lib32gcc-s1 lib32stdc++6 netcat-openbsd pigz python3 tar tmux unzip util-linux uuid-runtime wget xz-utils \
 	libtinfo5:i386 \
-	procps iproute2 && \
+	libsdl2-2.0-0:i386 \
+	procps iproute2; \
 	\
-	groupadd -g $GROUP_ID $DOCKER_USER && \
-	useradd -d "$STEAM_PATH" -g $GROUP_ID -u $USER_ID -m $DOCKER_USER && \
-	chown "$DOCKER_USER:$DOCKER_USER" /home/entrypoint.sh && \
-	chown "$DOCKER_USER:$DOCKER_USER" /home/initCron.sh && \
-	mkdir -p "$SERVER_PATH" && \
-	chown -R "$DOCKER_USER:$DOCKER_USER" "$STEAM_PATH" && \
-	chmod a=rx /home/entrypoint.sh && \
-	chmod a=rx /home/initCron.sh && \
-	chmod a=rx /home/createAlias.sh && \
+	groupadd -g $GROUP_ID $DOCKER_USER; \
+	useradd -d "$STEAM_PATH" -g $GROUP_ID -u $USER_ID -m $DOCKER_USER; \
+	chown "$DOCKER_USER:$DOCKER_USER" /home/entrypoint.sh; \
+	chown "$DOCKER_USER:$DOCKER_USER" /home/initCron.sh; \
+	mkdir -p "$SERVER_PATH"; \
+	chown -R "$DOCKER_USER:$DOCKER_USER" "$STEAM_PATH"; \
+	chmod a=rx /home/entrypoint.sh; \
+	chmod a=rx /home/initCron.sh; \
+	chmod a=rx /home/createAlias.sh; \
 	\
-	ulimit -n 2048 && \
+	ulimit -n 2048; \
 	\
-	wget -O "$STEAM_PATH/linuxgsm.sh" "https://linuxgsm.sh" && \
-	chown "$DOCKER_USER:$DOCKER_USER" "$STEAM_PATH/linuxgsm.sh" && \
-	chmod +x "$STEAM_PATH/linuxgsm.sh" && \
+	wget -O "$STEAM_PATH/linuxgsm.sh" "https://linuxgsm.sh"; \
+	chown "$DOCKER_USER:$DOCKER_USER" "$STEAM_PATH/linuxgsm.sh"; \
+	chmod +x "$STEAM_PATH/linuxgsm.sh"; \
 	\
 	\
-	wget -O "${SUPERCRONIC}" "$SUPERCRONIC_URL" && \
-	echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c - && \
-	chmod +x "$SUPERCRONIC"  && \
-	mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}" && \
+	wget -O "${SUPERCRONIC}" "$SUPERCRONIC_URL"; \
+	echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c -; \
+	chmod +x "$SUPERCRONIC"; \
+	mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}"; \
 	ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
 
 FROM lgsm as gmod
@@ -144,29 +145,30 @@ ENV CSS_PATH="/home/steam/addons/css" \
 
 COPY ["gmod/prepareServer.sh", "gmod/initConfig.sh", "gmod/forceWorkshopDownload.sh", "gmod/installAndMountAddons.sh", "gmod/common.cfg", "/home/"]
 
-RUN chown "$DOCKER_USER:$DOCKER_USER" /home/prepareServer.sh && \
-	chown "$DOCKER_USER:$DOCKER_USER" /home/initConfig.sh && \
-	chown "$DOCKER_USER:$DOCKER_USER" /home/forceWorkshopDownload.sh && \
-	chown "$DOCKER_USER:$DOCKER_USER" /home/installAndMountAddons.sh && \
-	chmod a=rx /home/prepareServer.sh && \
-	chmod a=rx /home/initConfig.sh && \
-	chmod a=rx /home/forceWorkshopDownload.sh && \
-	chmod a=rx /home/installAndMountAddons.sh && \
+RUN set -eux; \
+	chown "$DOCKER_USER:$DOCKER_USER" /home/prepareServer.sh; \
+	chown "$DOCKER_USER:$DOCKER_USER" /home/initConfig.sh; \
+	chown "$DOCKER_USER:$DOCKER_USER" /home/forceWorkshopDownload.sh; \
+	chown "$DOCKER_USER:$DOCKER_USER" /home/installAndMountAddons.sh; \
+	chmod a=rx /home/prepareServer.sh; \
+	chmod a=rx /home/initConfig.sh; \
+	chmod a=rx /home/forceWorkshopDownload.sh; \
+	chmod a=rx /home/installAndMountAddons.sh; \
 	\
-	/home/createAlias.sh "backup" '/home/steam/gmodserver backup' && \
-	/home/createAlias.sh "console" '/home/steam/gmodserver console' && \
-	/home/createAlias.sh "debug" '/home/steam/gmodserver debug' && \
-	/home/createAlias.sh "details" '/home/steam/gmodserver details' && \
-	/home/createAlias.sh "force-update" '/home/steam/gmodserver force-update' && \
-	/home/createAlias.sh "install" '/home/steam/gmodserver install' && \
-	/home/createAlias.sh "monitor" '/home/steam/gmodserver monitor' && \
-	/home/createAlias.sh "postdetails" '/home/steam/gmodserver postdetails' && \
-	/home/createAlias.sh "restart" '/home/steam/gmodserver restart' && \
-	/home/createAlias.sh "start" '/home/steam/gmodserver start' && \
-	/home/createAlias.sh "stop" '/home/steam/gmodserver stop' && \
-	/home/createAlias.sh "test-alert" '/home/steam/gmodserver test-alert' && \
-	/home/createAlias.sh "update" '/home/steam/gmodserver update' && \
-	/home/createAlias.sh "update-lgsm" '/home/steam/gmodserver update-lgsm' && \
+	/home/createAlias.sh "backup" '/home/steam/gmodserver backup'; \
+	/home/createAlias.sh "console" '/home/steam/gmodserver console'; \
+	/home/createAlias.sh "debug" '/home/steam/gmodserver debug'; \
+	/home/createAlias.sh "details" '/home/steam/gmodserver details'; \
+	/home/createAlias.sh "force-update" '/home/steam/gmodserver force-update'; \
+	/home/createAlias.sh "install" '/home/steam/gmodserver install'; \
+	/home/createAlias.sh "monitor" '/home/steam/gmodserver monitor'; \
+	/home/createAlias.sh "postdetails" '/home/steam/gmodserver postdetails'; \
+	/home/createAlias.sh "restart" '/home/steam/gmodserver restart'; \
+	/home/createAlias.sh "start" '/home/steam/gmodserver start'; \
+	/home/createAlias.sh "stop" '/home/steam/gmodserver stop'; \
+	/home/createAlias.sh "test-alert" '/home/steam/gmodserver test-alert'; \
+	/home/createAlias.sh "update" '/home/steam/gmodserver update'; \
+	/home/createAlias.sh "update-lgsm" '/home/steam/gmodserver update-lgsm'; \
 	/home/createAlias.sh "validate" '/home/steam/gmodserver validate'
 
 FROM gmod as TTT
